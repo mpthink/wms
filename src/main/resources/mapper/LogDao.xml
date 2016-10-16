@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.LogDao">    
+    
+    <insert id="insertLog">
+    	insert into
+    		wms_log(log_action,user_id)
+    	values(#{logAction},#{userId})
+    </insert>
+    
+	<delete id="deleteLog" parameterType="int">
+		delete
+			from wms_log
+		where
+			log_id=#{logId}
+	</delete>
+    
+	<select id="queryByUserId" resultType="Log" parameterType="long">
+        select 
+			log.log_id,
+			log.log_action,
+			log.log_create_time,
+			user.user_id "user.user_id",
+			user.user_name "user.user_name",
+			user.user_realname "user.user_realname"
+        from 
+        	wms_log log
+        left join wms_user user on log.user_id = user.user_id
+        where
+        	log.user_id=#{userId}
+    </select>
+    
+	<select id="queryAll" resultType="Log">
+        select 
+			log.log_id,
+			log.log_action,
+			log.log_create_time,
+			user.user_id "user.user_id",
+			user.user_name "user.user_name",
+			user.user_realname "user.user_realname"
+        from 
+        	wms_log log
+        left join wms_user user on log.user_id = user.user_id
+    </select>
+</mapper>

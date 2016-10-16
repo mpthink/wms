@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.RoleDao">
+    <!-- 目的:为DAO接口方法提供sql语句配置-->
+    <sql id="roleSelectFiled">
+    	role_id,role_name,role_permission
+    </sql>
+    
+    <select id="queryByRoleId" resultType="Role" parameterType="int">
+        select 
+			<include refid="roleSelectFiled"/>
+        from 
+        	wms_role role
+        where
+        	role.role_id=#{roleId}
+    </select>
+
+	<select id="queryAll" resultType="Role">
+        select 
+			<include refid="roleSelectFiled"/>
+        from 
+        	wms_role
+    </select>
+    
+    <insert id="insertRole">
+    	insert into
+    		wms_role(role_name,role_permission)
+    	values(#{roleName},#{rolePermission})
+    </insert>
+    
+    <update id="updateRole">
+    	update
+    		wms_role
+    	<trim prefix="set" suffixOverrides=",">
+    		<if test="roleName!=null">role_name=#{roleName},</if>
+    		<if test="rolePermission!=null">role_permission=#{rolePermission},</if>
+    	</trim>
+    	where 
+    		role_id=#{roleId}
+    </update>
+	
+	<delete id="deleteRole">
+		delete
+			from wms_role
+		where
+			role_id=#{roleId}
+	</delete>
+</mapper>

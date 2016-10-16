@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.UserDao">
+
+	<insert id="insertUser" parameterType="User">
+		insert into wms_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null">user_name,</if>
+			<if test="userRealname != null">user_realname,</if>
+			<if test="userPassword != null">user_password,</if>
+			<if test="userEmail != null">user_email,</if>
+			<if test="userPhone != null">user_phone,</if>
+			<if test="userLastLogintime != null">user_last_logintime,</if>
+			<if test="userLastLoginip != null">user_last_loginip,</if>
+			<if test="userStatus != null">user_status,</if>
+			<if test="role.roleId != null">user_role_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userName != null">#{userName,jdbcType=VARCHAR},</if>
+			<if test="userRealname != null">#{userRealname},</if>
+			<if test="userPassword != null">#{userPassword},</if>
+			<if test="userEmail != null">#{userEmail},</if>
+			<if test="userPhone != null">#{userPhone},</if>
+			<if test="userLastLogintime != null">#{userLastLogintime},</if>
+			<if test="userLastLoginip != null">#{userLastLoginip},</if>
+			<if test="userStatus != null">#{userStatus},</if>
+			<if test="role.roleId != null">#{role.roleId},</if>
+		</trim>
+	</insert>
+    
+    <delete id="deleteUser">
+    	delete from 
+    		wms_user
+    	where 
+    		user_id=#{userId}
+    </delete>
+    
+    <update id="updateUser" parameterType="User">
+    	update 
+    		wms_user
+    	<trim prefix="set" suffixOverrides=",">
+    		<if test="userName != null">user_name=#{userName},</if>
+			<if test="userRealname != null">user_realname=#{userRealname},</if>
+			<if test="userPassword != null">user_password=#{userPassword},</if>
+			<if test="userEmail != null">user_email=#{userEmail},</if>
+			<if test="userPhone != null">user_phone=#{userPhone},</if>
+			<if test="userLastLogintime != null">user_last_logintime=#{userLastLogintime},</if>
+			<if test="userLastLoginip != null">user_last_loginip=#{userLastLoginip},</if>
+			<if test="userStatus != null">user_status=#{userStatus},</if>
+			<if test="role.roleId != null">user_role_id=#{role.roleId},</if>
+    	</trim>
+    	where
+    		user_id=#{userId}
+    </update>
+    
+    <select id="queryByUserId" resultType="User" parameterType="long">
+        select 
+        	user.user_id,
+        	user.user_name,
+        	user.user_realname,
+        	user.user_password,
+        	user.user_email,
+        	user.user_phone,
+        	user.user_create_time,
+        	user.user_last_logintime,
+        	user.user_last_loginip,
+        	user.user_status,
+        	role.role_id "role.role_id",
+        	role.role_name "role.role_name",
+        	role.role_permission "role.role_permission"
+        from 
+        	wms_user user
+        inner join wms_role role on user.user_role_id = role.role_id
+        where
+        	user.user_id=#{userId}
+    </select>
+    
+    <select id="queryByName" resultType="User" parameterType="String">
+        select 
+        	user.user_id,
+        	user.user_name,
+        	user.user_realname,
+        	user.user_password,
+        	user.user_email,
+        	user.user_phone,
+        	user.user_create_time,
+        	user.user_last_logintime,
+        	user.user_last_loginip,
+        	user.user_status,
+        	role.role_id "role.role_id",
+        	role.role_name "role.role_name",
+        	role.role_permission "role.role_permission"
+        from 
+        	wms_user user
+        inner join wms_role role on user.user_role_id = role.role_id
+        where
+        	user.user_name=#{userName}
+    </select>
+    
+    <select id="queryByNamePassword" resultType="User">
+        select 
+        	user.user_id,
+        	user.user_name,
+        	user.user_realname,
+        	user.user_password,
+        	user.user_email,
+        	user.user_phone,
+        	user.user_create_time,
+        	user.user_last_logintime,
+        	user.user_last_loginip,
+        	user.user_status,
+        	role.role_id "role.role_id",
+        	role.role_name "role.role_name",
+        	role.role_permission "role.role_permission"
+        from 
+        	wms_user user
+        inner join wms_role role on user.user_role_id = role.role_id
+        where
+        	user.user_name=#{userName} and user.user_password=#{userPassword}
+    </select>
+    
+	<select id="queryAll" resultType="User">
+		select 
+        	user.user_id,
+        	user.user_name,
+        	user.user_realname,
+        	user.user_password,
+        	user.user_email,
+        	user.user_phone,
+        	user.user_create_time,
+        	user.user_last_logintime,
+        	user.user_last_loginip,
+        	user.user_status,
+        	role.role_id "role.role_id",
+        	role.role_name "role.role_name",
+        	role.role_permission "role.role_permission"
+        from 
+        	wms_user user
+        left join wms_role role on user.user_role_id = role.role_id
+	</select>
+</mapper>
