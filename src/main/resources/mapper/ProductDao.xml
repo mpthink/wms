@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.ProductDao">    
+    
+    <insert id="insertProduct" parameterType="Product">
+    	insert into
+    		wms_product
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="productName != null">product_name,</if>
+			<if test="productCategory.productCategoryId != null">product_category_id,</if>
+			<if test="customer.customerId != null">customer_id,</if>
+			<if test="productMarketPrice != null">product_market_price,</if>
+			<if test="productCostPrice != null">product_cost_price,</if>
+			<if test="productVolume != null">product_volume,</if>
+			<if test="productUnit != null">product_unit,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="productName != null">#{productName,jdbcType=VARCHAR},</if>
+			<if test="productCategory.productCategoryId != null">#{productCategory.productCategoryId},</if>
+			<if test="customer.customerId != null">#{customer.customerId},</if>
+			<if test="productMarketPrice != null">#{productMarketPrice},</if>
+			<if test="productCostPrice != null">#{productCostPrice},</if>
+			<if test="productVolume != null">#{productVolume},</if>
+			<if test="productUnit != null">#{productUnit},</if>
+		</trim>
+    </insert>
+    
+	<delete id="deleteProduct" parameterType="int">
+		delete
+			from wms_product
+		where
+			product_id=#{productId}
+	</delete>
+    
+    <update id="updateProduct" parameterType="Product">
+    	update 
+    		wms_product
+    	<trim prefix="set" suffixOverrides=",">
+    		<if test="productName != null">product_name=#{productName},</if>
+			<if test="productCategory.productCategoryId != null">product_category_id=#{productCategory.productCategoryId},</if>
+			<if test="customer.customerId != null">customer_id=#{customer.customerId},</if>
+			<if test="productMarketPrice != null">product_market_price=#{productMarketPrice},</if>
+			<if test="productCostPrice != null">product_cost_price=#{productCostPrice},</if>
+			<if test="productVolume != null">product_volume=#{productVolume},</if>
+			<if test="productUnit != null">product_unit=#{productUnit},</if>
+    	</trim>
+    	where
+			product_id=#{productId}
+    </update>
+
+	<select id="queryByProductId" resultType="Product" parameterType="int">
+        select 
+        	product.product_id,
+        	product.product_name,
+        	product.product_market_price,
+        	product.product_cost_price,
+        	product.productVolume,
+        	product.productUnit,        	
+			customer.customer_id,
+			customer.customer_name,
+			customer.customer_company,
+			productCategory.product_category_id,
+			productCategory.product_category_parentid,
+			productCategory.product_category_name
+        from 
+        	wms_product product
+        	left join wms_customer customer on customer.customer_id = product.customer_id
+        	left join wms_product_category productCategory on productCategory.product_category_id = product.product_category_id
+        where
+        	product.product_id=#{productId}
+    </select>
+    
+    <select id="queryByCustomerId" resultType="Product" parameterType="int">
+        select 
+        	product.product_id,
+        	product.product_name,
+        	product.product_market_price,
+        	product.product_cost_price,
+        	product.productVolume,
+        	product.productUnit,        	
+			customer.customer_id,
+			customer.customer_name,
+			customer.customer_company,
+			productCategory.product_category_id,
+			productCategory.product_category_parentid,
+			productCategory.product_category_name
+        from 
+        	wms_product product
+        	left join wms_customer customer on customer.customer_id = product.customer_id
+        	left join wms_product_category productCategory on productCategory.product_category_id = product.product_category_id
+        where
+        	product.customer_id=#{customerId}
+    </select>
+
+	<select id="queryByProductCategoryId" resultType="Product" parameterType="int">
+        select 
+        	product.product_id,
+        	product.product_name,
+        	product.product_market_price,
+        	product.product_cost_price,
+        	product.productVolume,
+        	product.productUnit,        	
+			customer.customer_id,
+			customer.customer_name,
+			customer.customer_company,
+			productCategory.product_category_id,
+			productCategory.product_category_parentid,
+			productCategory.product_category_name
+        from 
+        	wms_product product
+        	left join wms_customer customer on customer.customer_id = product.customer_id
+        	left join wms_product_category productCategory on productCategory.product_category_id = product.product_category_id
+        where
+        	product.product_category_id=#{productCategoryId}
+    </select>
+
+	<select id="queryAll" resultType="Product">
+        select 
+        	product.product_id,
+        	product.product_name,
+        	product.product_market_price,
+        	product.product_cost_price,
+        	product.productVolume,
+        	product.productUnit,        	
+			customer.customer_id,
+			customer.customer_name,
+			customer.customer_company,
+			productCategory.product_category_id,
+			productCategory.product_category_parentid,
+			productCategory.product_category_name
+        from 
+        	wms_product product
+        	left join wms_customer customer on customer.customer_id = product.customer_id
+        	left join wms_product_category productCategory on productCategory.product_category_id = product.product_category_id
+    </select>
+</mapper>

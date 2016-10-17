@@ -56,5 +56,6 @@
         from 
         	wms_notice notice
         left join wms_user user on notice.user_id = user.user_id
+        order by notice.notice_create_time desc
     </select>
 </mapper>

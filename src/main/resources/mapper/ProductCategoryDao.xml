@@ -53,5 +53,6 @@
 			product_category_name
         from 
         	wms_product_category
+        	order by product_category_id
     </select>
 </mapper>

@@ -100,5 +100,6 @@
         from 
         	wms_customer customer
         left join wms_customer_category customerCategory on customer.customer_category_id = customerCategory.customer_category_id
+        order by customer.customer_id
     </select>
 </mapper>

@@ -139,5 +139,6 @@
         from 
         	wms_user user
         left join wms_role role on user.user_role_id = role.role_id
+        order by user.user_id
 	</select>
 </mapper>

@@ -43,5 +43,6 @@
         from 
         	wms_log log
         left join wms_user user on log.user_id = user.user_id
+        order by log.log_create_time desc
     </select>
 </mapper>
