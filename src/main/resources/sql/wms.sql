@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_customer` (
   `customer_company` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '客户公司名称',
   `customer_address` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '客户单位地址',
   `customer_phone` VARCHAR(13) NOT NULL DEFAULT '' COMMENT '客户电话',
-  `customer_category_id` INT NOT NULL DEFAULT '0' '客户分类ID',
+  `customer_category_id` INT NOT NULL DEFAULT '0' COMMENT '客户分类ID',
   PRIMARY KEY (`customer_id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '客户信息表';
 
