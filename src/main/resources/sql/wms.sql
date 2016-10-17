@@ -109,18 +109,6 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_product_category`(
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '产品分类表';
 
 -- -----------------------------------------------------
--- Table `wms`.`wms_product_quality`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `wms`.`wms_product_quality` ;
-
-CREATE TABLE IF NOT EXISTS `wms`.`wms_product_quality` (
-  `product_quality_id` INT unsigned NOT NULL AUTO_INCREMENT,
-  `product_quality_name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '质量类别名称',
-  `product_quality_desc` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '质量类别描述',
-  PRIMARY KEY (`product_quality_id`)
-)ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '质量类别表';
-
--- -----------------------------------------------------
 -- Table `wms`.`wms_customer`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wms`.`wms_customer`;
@@ -185,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_sub` (
   `iss_plan_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库计划数量',
   `iss_real_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库实际数量',
   `product_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
-  `product_quality_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '质量ID',
+  `product_quality` TINYINT NOT NULL DEFAULT '0' COMMENT '质量',
   `store_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '仓库ID',
   `iss_insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '入库子表插入时间',
   `iss_insert_order` SMALLINT(4) NOT NULL DEFAULT '0' COMMENT '入库子表插入顺序',
@@ -193,7 +181,6 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_sub` (
   INDEX `fk_instore_sub_instore_main_idx` (`ism_id` ASC),
   INDEX `fk_instore_sub_store_idx` (`store_id` ASC),
   INDEX `fk_instore_sub_product_idx` (`product_id` ASC),
-  INDEX `fk_instore_sub_product_quality_idx` (`product_quality_id` ASC),
   CONSTRAINT `fk_instore_sub_instore_main`
     FOREIGN KEY (`ism_id`)
     REFERENCES `wms`.`wms_instore_main` (`ism_id`)
@@ -207,11 +194,6 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_sub` (
   CONSTRAINT `fk_instore_sub_product`
     FOREIGN KEY (`product_id`)
     REFERENCES `wms`.`wms_product` (`product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_instore_sub_product_quality`
-    FOREIGN KEY (`product_quality_id`)
-    REFERENCES `wms`.`wms_product_quality` (`product_quality_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '入库子表';
@@ -252,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
   `oss_plan_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '出库计划数量',
   `oss_real_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '出库实际数量',
   `product_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
-  `product_quality_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '产品质量ID',
+  `product_quality` TINYINT NOT NULL DEFAULT '0' COMMENT '产品质量',
   `store_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '仓库ID',
   `oss_insert_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '单据插入时间',
   `oss_insert_order` SMALLINT(4) NOT NULL DEFAULT '0' COMMENT '单据插入顺序',
@@ -260,7 +242,6 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
   INDEX `fk_outstore_sub_outstore_main_idx` (`osm_id` ASC),
   INDEX `fk_outstore_sub_store_idx` (`store_id` ASC),
   INDEX `fk_outstore_sub_product_idx` (`product_id` ASC),
-  INDEX `fk_outstore_sub_product_quality_idx` (`product_quality_id` ASC),
   CONSTRAINT `fk_outstore_sub_outstore_main`
     FOREIGN KEY (`osm_id`)
     REFERENCES `wms`.`wms_outstore_main` (`osm_id`)
@@ -274,11 +255,6 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
   CONSTRAINT `fk_outstore_sub_product`
     FOREIGN KEY (`product_id`)
     REFERENCES `wms`.`wms_product` (`product_id`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_outstore_sub_product_quality`
-    FOREIGN KEY (`product_quality_id`)
-    REFERENCES `wms`.`wms_product_quality` (`product_quality_id`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '出仓子表';

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.ProductCategoryDao">    
+    
+    <insert id="insertProductCategory">
+    	insert into
+    		wms_product_category
+    		<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="productCategoryParrentid != null">product_category_parentid,</if>
+				<if test="productCategoryName != null">product_category_name,</if>
+			</trim>
+    	values
+    		<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="productCategoryParrentid != null">#{productCategoryParrentid},</if>
+				<if test="productCategoryName != null">#{productCategoryName},</if>
+			</trim>
+    </insert>
+    
+	<delete id="deleteProductCategory" parameterType="int">
+		delete
+			from wms_product_category
+		where
+			product_category_id=#{productCategoryId}
+	</delete>
+    
+    <update id="updateProductCategory">
+    	update wms_product_category
+    	<trim prefix="set" suffixOverrides=",">
+			<if test="productCategoryParrentid != null">product_category_parentid=#{productCategoryParrentid},</if>
+			<if test="productCategoryName != null">product_category_name=#{productCategoryName},</if>
+    	</trim>
+    	where
+    		product_category_id=#{productCategoryId}
+    </update>
+    
+	<select id="queryById" resultType="ProductCategory" parameterType="int">
+        select 
+			product_category_id,
+			product_category_parentid,
+			product_category_name
+        from 
+        	wms_product_category
+        where
+        	product_category_id=#{productCategoryId}
+    </select>
+    
+	<select id="queryAll" resultType="ProductCategory">
+        select 
+			product_category_id,
+			product_category_parentid,
+			product_category_name
+        from 
+        	wms_product_category
+    </select>
+</mapper>
