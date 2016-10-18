@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.InstoreMainDao">    
+    
+    <insert id="insertInstoreMain" parameterType="InstoreMain">
+    	insert into
+    		wms_instore_main
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ismSn != null">ism_sn,</if>
+			<if test="ismTicketNo != null">ism_ticket_no,</if>
+			<if test="ismTicketTime != null">ism_ticket_time,</if>
+			<if test="ismCarrier != null">ism_carrier,</if>
+			<if test="ismCarNo != null">ism_car_no,</if>
+			<if test="ismStatus != 0">ism_status,</if>
+			<if test="ismTotal != 0">ism_total,</if>
+			<if test="ismRemark != null">ism_remark,</if>
+			<if test="ismCreator != null">ism_creator,</if>
+			<if test="ismCreateDate != null">ism_create_date,</if>
+			<if test="ismChargebacker != null">ism_chargebacker,</if>
+			<if test="ismChargebackDate != null">ism_chargeback_date,</if>
+			<if test="ismConfirmor != null">ism_confirmor,</if>
+			<if test="ismConfirmDate != null">ism_confirm_date,</if>
+			<if test="ismReviewer != null">ism_reviewer,</if>
+			<if test="ismReviewDate != null">ism_review_date,</if>
+			<if test="customer.customerId != 0">customer_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ismSn != null">#{ismSn},</if>
+			<if test="ismTicketNo != null">#{ismTicketNo},</if>
+			<if test="ismTicketTime != null">#{ismTicketTime},</if>
+			<if test="ismCarrier != null">#{ismCarrier},</if>
+			<if test="ismCarNo != null">#{ismCarNo},</if>
+			<if test="ismStatus != 0">#{ismStatus},</if>
+			<if test="ismTotal != 0">#{ismTotal},</if>
+			<if test="ismRemark != null">#{ismRemark},</if>
+			<if test="ismCreator != null">#{ismCreator},</if>
+			<if test="ismCreateDate != null">#{ismCreateDate},</if>
+			<if test="ismChargebacker != null">#{ismChargebacker},</if>
+			<if test="ismChargebackDate != null">#{ismChargebackDate},</if>
+			<if test="ismConfirmor != null">#{ismConfirmor},</if>
+			<if test="ismConfirmDate != null">#{ismConfirmDate},</if>
+			<if test="ismReviewer != null">#{ismReviewer},</if>
+			<if test="ismReviewDate != null">#{ismReviewDate},</if>
+			<if test="customer.customerId != 0">#{customer.customerId},</if>
+		</trim>
+    </insert>
+    
+	<delete id="deleteInstoreMain" parameterType="int">
+		delete
+			from wms_instore_main
+		where
+			ism_id=#{ismId}
+	</delete>
+    
+    <update id="updateInstoreMain" parameterType="InstoreMain">
+    	update 
+    		wms_instore_main
+    	<trim prefix="set" suffixOverrides=",">
+			<if test="ismSn != null">ism_sn=#{ismSn},</if>
+			<if test="ismTicketNo != null">ism_ticket_no=#{ismTicketNo},</if>
+			<if test="ismTicketTime != null">ism_ticket_time=#{ismTicketTime},</if>
+			<if test="ismCarrier != null">ism_carrier=#{ismCarrier},</if>
+			<if test="ismCarNo != null">ism_car_no=#{ismCarNo},</if>
+			<if test="ismStatus != 0">ism_status=#{ismStatus},</if>
+			<if test="ismTotal != 0">ism_total=#{ismTotal},</if>
+			<if test="ismRemark != null">ism_remark=#{ismRemark},</if>
+			<if test="ismCreator != null">ism_creator=#{ismCreator},</if>
+			<if test="ismCreateDate != null">ism_create_date=#{ismCreateDate},</if>
+			<if test="ismChargebacker != null">ism_chargebacker=#{ismChargebacker},</if>
+			<if test="ismChargebackDate != null">ism_chargeback_date=#{ismChargebackDate},</if>
+			<if test="ismConfirmor != null">ism_confirmor=#{ismConfirmor},</if>
+			<if test="ismConfirmDate != null">ism_confirm_date=#{ismConfirmDate},</if>
+			<if test="ismReviewer != null">ism_reviewer=#{ismReviewer},</if>
+			<if test="ismReviewDate != null">ism_review_date=#{ismReviewDate},</if>
+			<if test="customer.customerId != 0">customer_id=#{customer.customerId},</if>
+		</trim>
+    	where
+    		ism_id=#{ismId}
+    </update>
+    
+    <select id="queryById" resultType="InstoreMain" parameterType="int">
+        select 
+			ism.ism_id,
+			ism.ism_sn,
+			ism.ism_ticket_no,
+			ism.ism_ticket_time,
+			ism.ism_carrier,
+			ism.ism_car_no,
+			ism.ism_status,
+			ism.ism_total,
+			ism.ism_remark,
+			ism.ism_creator,
+			ism.ism_create_date,
+			ism.ism_chargebacker,
+			ism.ism_chargeback_date,
+			ism.ism_confirmor,
+			ism.ism_confirm_date,
+			ism.ism_reviewer,
+			ism.ism_review_date,
+			customer.customer_id "customer.customer_id",
+			customer.customer_name "customer.customer_name",
+			customer.customer_company "customer.customer_company"
+        from 
+        	wms_instore_main ism
+        left join wms_customer customer on customer.customer_id = ism.customer_id
+        where ism.ism_id = #{ismId}
+        order by ism.ism_create_date
+    </select>
+
+	<select id="queryByFileds" resultType="InstoreMain" parameterType="map">
+        select 
+			ism.ism_id,
+			ism.ism_sn,
+			ism.ism_ticket_no,
+			ism.ism_ticket_time,
+			ism.ism_carrier,
+			ism.ism_car_no,
+			ism.ism_status,
+			ism.ism_total,
+			ism.ism_remark,
+			ism.ism_creator,
+			ism.ism_create_date,
+			ism.ism_chargebacker,
+			ism.ism_chargeback_date,
+			ism.ism_confirmor,
+			ism.ism_confirm_date,
+			ism.ism_reviewer,
+			ism.ism_review_date,
+			customer.customer_id "customer.customer_id",
+			customer.customer_name "customer.customer_name",
+			customer.customer_company "customer.customer_company"
+        from 
+        	wms_instore_main ism
+        left join wms_customer customer on customer.customer_id = ism.customer_id
+        <trim prefix="where " suffixOverrides="and |or ">
+        	<if test="ismTicketNo != null">ism_ticket_no like CONCAT('%',#{ismTicketNo},'%') and</if>
+        	<if test="ismCarrier != null">ism_carrier like CONCAT('%',#{ismCarrier},'%') and</if>
+        	<if test="customerName != null">customer.customer_name like CONCAT('%',#{customerName},'%') and</if>
+        	<if test="ismCreator != null">ism_creator like CONCAT('%',#{ismCreator},'%') and</if>
+        	<if test="ismChargebacker != null">ism_chargebacker like CONCAT('%',#{ismTicketNo},'%') and</if>
+        	<if test="ismConfirmor != null">ism_confirmor like CONCAT('%',#{ismConfirmor},'%') and</if>
+        	<if test="ismreviewer != null">ism_reviewer like CONCAT('%',#{ismreviewer},'%') and</if>
+        	<if test="ismStatus != null">ism_status = #{ismStatus} and</if>
+        	<if test="ismCreateDateBegin != null">ism_create_date >= ismCreateDateBegin and</if>
+        	<if test="ismCreateDateEnd != null">ism_create_date <![CDATA[ <= ]]> ismCreateDateEnd and</if>
+        </trim>
+        order by ism.ism_create_date
+    </select>
+    
+    <select id="queryAll" resultType="InstoreMain">
+        select 
+			ism.ism_id,
+			ism.ism_sn,
+			ism.ism_ticket_no,
+			ism.ism_ticket_time,
+			ism.ism_carrier,
+			ism.ism_car_no,
+			ism.ism_status,
+			ism.ism_total,
+			ism.ism_remark,
+			ism.ism_creator,
+			ism.ism_create_date,
+			ism.ism_chargebacker,
+			ism.ism_chargeback_date,
+			ism.ism_confirmor,
+			ism.ism_confirm_date,
+			ism.ism_reviewer,
+			ism.ism_review_date,
+			customer.customer_id "customer.customer_id",
+			customer.customer_name "customer.customer_name",
+			customer.customer_company "customer.customer_company"
+        from 
+        	wms_instore_main ism
+        left join wms_customer customer on customer.customer_id = ism.customer_id
+        order by ism.ism_create_date
+    </select>
+</mapper>

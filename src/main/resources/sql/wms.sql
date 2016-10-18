@@ -157,8 +157,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_main` (
   `ism_chargeback_date` TIMESTAMP NULL COMMENT '单据退单时间',
   `ism_confirmor` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据勾单人',
   `ism_confirm_date` TIMESTAMP NULL COMMENT '单据勾单时间',
-  `ism_reviwer` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据审核人',
-  `ism_reviw_date` TIMESTAMP NULL COMMENT '单据审核时间',
+  `ism_reviewer` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据审核人',
+  `ism_review_date` TIMESTAMP NULL COMMENT '单据审核时间',
   `customer_id` INT NOT NULL DEFAULT '0' COMMENT '所属客户ID',
   PRIMARY KEY (`ism_id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '入库总表';
@@ -219,8 +219,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_main` (
   `osm_confirmor` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据勾单人',
   `osm_confirm_date` TIMESTAMP NULL COMMENT '单据勾单时间',
   `customer_id` INT NOT NULL DEFAULT '0' COMMENT '客户单位ID',
-  `osm_reviwer` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据审核人',
-  `osm_reviw_date` TIMESTAMP NULL COMMENT '单据审核时间',
+  `osm_reviewer` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '单据审核人',
+  `osm_review_date` TIMESTAMP NULL COMMENT '单据审核时间',
   PRIMARY KEY (`osm_id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '出库总表';
 

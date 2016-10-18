@@ -19,8 +19,8 @@ public class InstoreMain {
 	private Date ismChargebackDate;
 	private String ismConfirmor;
 	private Date ismConfirmDate;
-	private String ismReviwer;
-	private Date ismReviwDate;
+	private String ismReviewer;
+	private Date ismReviewDate;
 	private Customer customer;
 
 	public int getIsmId() {
@@ -143,20 +143,20 @@ public class InstoreMain {
 		this.ismConfirmDate = ismConfirmDate;
 	}
 
-	public String getIsmReviwer() {
-		return ismReviwer;
+	public String getIsmReviewer() {
+		return ismReviewer;
 	}
 
-	public void setIsmReviwer(String ismReviwer) {
-		this.ismReviwer = ismReviwer;
+	public void setIsmReviewer(String ismReviewer) {
+		this.ismReviewer = ismReviewer;
 	}
 
-	public Date getIsmReviwDate() {
-		return ismReviwDate;
+	public Date getIsmReviewDate() {
+		return ismReviewDate;
 	}
 
-	public void setIsmReviwDate(Date ismReviwDate) {
-		this.ismReviwDate = ismReviwDate;
+	public void setIsmReviewDate(Date ismReviewDate) {
+		this.ismReviewDate = ismReviewDate;
 	}
 
 	public Customer getCustomer() {
@@ -172,9 +172,8 @@ public class InstoreMain {
 		return "InstoreMain [ismId=" + ismId + ", ismSn=" + ismSn + ", ismTicketNo=" + ismTicketNo + ", ismTicketTime=" + ismTicketTime
 			+ ", ismCarrier=" + ismCarrier + ", ismCarNo=" + ismCarNo + ", ismStatus=" + ismStatus + ", ismTotal=" + ismTotal + ", ismRemark="
 			+ ismRemark + ", ismCreator=" + ismCreator + ", ismCreateDate=" + ismCreateDate + ", ismChargebacker=" + ismChargebacker
-			+ ", ismChargebackDate=" + ismChargebackDate + ", ismConfirmor=" + ismConfirmor + ", ismConfirmDate=" + ismConfirmDate + ", ismReviwer="
-			+ ismReviwer + ", ismReviwDate=" + ismReviwDate + ", customer=" + customer + "]";
+			+ ", ismChargebackDate=" + ismChargebackDate + ", ismConfirmor=" + ismConfirmor + ", ismConfirmDate=" + ismConfirmDate + ", ismReviewer="
+			+ ismReviewer + ", ismReviewDate=" + ismReviewDate + ", customer=" + customer + "]";
 	}
-
 
 }

@@ -7,9 +7,9 @@ public class InstoreSub {
 	private int ismId;
 	private int issPlanQuantity;
 	private int issRealQuantity;
-	private int productId;
+	private Product product;
 	private int productQuality;
-	private int storeId;
+	private Store store;
 	private Date issInsertTime;
 	private int issInsertOrder;
 
@@ -45,12 +45,12 @@ public class InstoreSub {
 		this.issRealQuantity = issRealQuantity;
 	}
 
-	public int getProductId() {
-		return productId;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public int getProductQuality() {
@@ -61,12 +61,12 @@ public class InstoreSub {
 		this.productQuality = productQuality;
 	}
 
-	public int getStoreId() {
-		return storeId;
+	public Store getStore() {
+		return store;
 	}
 
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
+	public void setStore(Store store) {
+		this.store = store;
 	}
 
 	public Date getIssInsertTime() {
@@ -88,10 +88,8 @@ public class InstoreSub {
 	@Override
 	public String toString() {
 		return "InstoreSub [issId=" + issId + ", ismId=" + ismId + ", issPlanQuantity=" + issPlanQuantity + ", issRealQuantity=" + issRealQuantity
-			+ ", productId=" + productId + ", productQuality=" + productQuality + ", storeId=" + storeId + ", issInsertTime=" + issInsertTime
+			+ ", product=" + product + ", productQuality=" + productQuality + ", store=" + store + ", issInsertTime=" + issInsertTime
 			+ ", issInsertOrder=" + issInsertOrder + "]";
 	}
-
-
 
 }
