@@ -9,9 +9,10 @@ public class Store {
 	private int storeId;
 	private String storeName;
 	private int storeSubParrent;
+	private String storeSubName;
 	private String storeAddress;
 	private String storeTotalSpace;
-	private User user;
+	private User storeManager;
 
 	public int getStoreId() {
 		return storeId;
@@ -53,18 +54,27 @@ public class Store {
 		this.storeTotalSpace = storeTotalSpace;
 	}
 
-	public User getUser() {
-		return user;
+	public String getStoreSubName() {
+		return storeSubName;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setStoreSubName(String storeSubName) {
+		this.storeSubName = storeSubName;
+	}
+
+	public User getStoreManager() {
+		return storeManager;
+	}
+
+	public void setStoreManager(User storeManager) {
+		this.storeManager = storeManager;
 	}
 
 	@Override
 	public String toString() {
-		return "Store [storeId=" + storeId + ", storeName=" + storeName + ", storeSubParrent=" + storeSubParrent + ", storeAddress=" + storeAddress
-			+ ", storeTotalSpace=" + storeTotalSpace + ", user=" + user + "]";
+		return "Store [storeId=" + storeId + ", storeName=" + storeName + ", storeSubParrent=" + storeSubParrent + ", storeSubName=" + storeSubName
+			+ ", storeAddress=" + storeAddress + ", storeTotalSpace=" + storeTotalSpace + ", storeManager=" + storeManager + "]";
 	}
+
 
 }

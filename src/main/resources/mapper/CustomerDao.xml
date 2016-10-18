@@ -14,7 +14,7 @@
 			<if test="customerCompany != null">customer_company,</if>
 			<if test="customerAddress != null">customer_address,</if>
 			<if test="customerPhone != null">customer_phone,</if>
-			<if test="customerCategory.customerCategoryId != null">customer_category_id,</if>
+			<if test="customerCategory.customerCategoryId != 0">customer_category_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="customerName != null">#{customerName,jdbcType=VARCHAR},</if>
@@ -23,7 +23,7 @@
 			<if test="customerCompany != null">#{customerCompany},</if>
 			<if test="customerAddress != null">#{customerAddress},</if>
 			<if test="customerPhone != null">#{customerPhone},</if>
-			<if test="customerCategory.customerCategoryId != null">#{customerCategory.customerCategoryId},</if>
+			<if test="customerCategory.customerCategoryId != 0">#{customerCategory.customerCategoryId},</if>
 		</trim>
     </insert>
     
@@ -44,7 +44,7 @@
 			<if test="customerCompany != null">customer_company=#{customerCompany},</if>
 			<if test="customerAddress != null">customer_address=#{customerAddress},</if>
 			<if test="customerPhone != null">customer_phone=#{customerPhone},</if>
-			<if test="customerCategory.customerCategoryId != null">customer_category_id=#{customerCategory.customerCategoryId},</if>
+			<if test="customerCategory.customerCategoryId != 0">customer_category_id=#{customerCategory.customerCategoryId},</if>
     	</trim>
     	where
     		customer_id=#{customerId}

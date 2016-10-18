@@ -8,12 +8,12 @@
     	insert into
     		wms_product_category
     		<trim prefix="(" suffix=")" suffixOverrides=",">
-				<if test="productCategoryParrentid != null">product_category_parentid,</if>
+				<if test="productCategoryParrentid != 0">product_category_parentid,</if>
 				<if test="productCategoryName != null">product_category_name,</if>
 			</trim>
     	values
     		<trim prefix="(" suffix=")" suffixOverrides=",">
-				<if test="productCategoryParrentid != null">#{productCategoryParrentid},</if>
+				<if test="productCategoryParrentid != 0">#{productCategoryParrentid},</if>
 				<if test="productCategoryName != null">#{productCategoryName},</if>
 			</trim>
     </insert>
@@ -28,7 +28,7 @@
     <update id="updateProductCategory">
     	update wms_product_category
     	<trim prefix="set" suffixOverrides=",">
-			<if test="productCategoryParrentid != null">product_category_parentid=#{productCategoryParrentid},</if>
+			<if test="productCategoryParrentid != 0">product_category_parentid=#{productCategoryParrentid},</if>
 			<if test="productCategoryName != null">product_category_name=#{productCategoryName},</if>
     	</trim>
     	where
