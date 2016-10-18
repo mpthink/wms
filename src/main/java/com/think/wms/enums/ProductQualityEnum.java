@@ -20,6 +20,14 @@ public enum ProductQualityEnum {
 		return stateInfo;
 	}
 
+	public static String[] stateInfos() {
+		String[] stateInfos = new String[values().length];
+		for (ProductQualityEnum state : values()) {
+			stateInfos[state.getState()] = state.getStateInfo();
+		}
+		return stateInfos;
+	}
+
 	public static ProductQualityEnum stateOf(int index) {
 		for (ProductQualityEnum state : values()) {
 			if (state.getState() == index) {
