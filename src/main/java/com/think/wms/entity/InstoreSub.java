@@ -5,6 +5,7 @@ import java.util.Date;
 public class InstoreSub {
 	private int issId;
 	private int ismId;
+	private int issParentId;
 	private int issPlanQuantity;
 	private int issRealQuantity;
 	private Product product;
@@ -85,11 +86,19 @@ public class InstoreSub {
 		this.issInsertOrder = issInsertOrder;
 	}
 
+	public int getIssParentId() {
+		return issParentId;
+	}
+
+	public void setIssParentId(int issParentId) {
+		this.issParentId = issParentId;
+	}
+
 	@Override
 	public String toString() {
-		return "InstoreSub [issId=" + issId + ", ismId=" + ismId + ", issPlanQuantity=" + issPlanQuantity + ", issRealQuantity=" + issRealQuantity
-			+ ", product=" + product + ", productQuality=" + productQuality + ", store=" + store + ", issInsertTime=" + issInsertTime
-			+ ", issInsertOrder=" + issInsertOrder + "]";
+		return "InstoreSub [issId=" + issId + ", ismId=" + ismId + ", issParentId=" + issParentId + ", issPlanQuantity=" + issPlanQuantity
+			+ ", issRealQuantity=" + issRealQuantity + ", product=" + product + ", productQuality=" + productQuality + ", store=" + store
+			+ ", issInsertTime=" + issInsertTime + ", issInsertOrder=" + issInsertOrder + "]";
 	}
 
 }

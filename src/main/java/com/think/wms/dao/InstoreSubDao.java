@@ -5,11 +5,17 @@ import java.util.Map;
 
 import com.think.wms.entity.InstoreSub;
 
-public interface InstoreSubDDao {
+public interface InstoreSubDao {
 
 	int insertInstoreSub(InstoreSub instoreSub);
 
-	int deleteInstoreSub(int issId);
+	int insertInstoreSubList(List<InstoreSub> instoreSubs);
+
+	int deleteInstoreSubByIssId(int issId);
+
+	int deleteInstoreSubByIsmId(int ismId);
+
+	int deleteInstoreSubByIssParentId(int issParentId);
 
 	int updateInstoreSub(InstoreSub instoreSub);
 

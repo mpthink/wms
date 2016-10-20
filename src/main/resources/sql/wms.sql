@@ -170,6 +170,7 @@ DROP TABLE IF EXISTS `wms`.`wms_instore_sub` ;
 CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_sub` (
   `iss_id` INT unsigned NOT NULL AUTO_INCREMENT,
   `ism_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '入库总表ID',
+  `iss_parent_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '子表父ID，用于分库',
   `iss_plan_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库计划数量',
   `iss_real_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库实际数量',
   `product_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
