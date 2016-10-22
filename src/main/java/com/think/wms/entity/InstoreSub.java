@@ -13,6 +13,7 @@ public class InstoreSub {
 	private Store store;
 	private Date issInsertTime;
 	private int issInsertOrder;
+	private InstoreMain instoreMain;
 
 	public int getIssId() {
 		return issId;
@@ -94,11 +95,18 @@ public class InstoreSub {
 		this.issParentId = issParentId;
 	}
 
+	public InstoreMain getInstoreMain() {
+		return instoreMain;
+	}
+
+	public void setInstoreMain(InstoreMain instoreMain) {
+		this.instoreMain = instoreMain;
+	}
+
 	@Override
 	public String toString() {
 		return "InstoreSub [issId=" + issId + ", ismId=" + ismId + ", issParentId=" + issParentId + ", issPlanQuantity=" + issPlanQuantity
 			+ ", issRealQuantity=" + issRealQuantity + ", product=" + product + ", productQuality=" + productQuality + ", store=" + store
-			+ ", issInsertTime=" + issInsertTime + ", issInsertOrder=" + issInsertOrder + "]";
+			+ ", issInsertTime=" + issInsertTime + ", issInsertOrder=" + issInsertOrder + ", instoreMain=" + instoreMain + "]";
 	}
-
 }

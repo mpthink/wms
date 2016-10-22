@@ -108,6 +108,103 @@
         where ism.ism_id = #{ismId}
         order by ism.ism_create_date
     </select>
+	
+	
+	<resultMap type="InstoreMain" id="instoreMainWithInstoreSubs">
+		<id property="ismId" column="ism.ism_id"/>
+		<result property="ismSn" column="ism.ism_sn"/>
+		<result property="ismTicketNo" column="ism.ism_ticket_no"/>
+		<result property="ismTicketTime" column="ism.ism_ticket_time"/>
+		<result property="ismCarrier" column="ism.ism_carrier"/>
+		<result property="ismCarNo" column="ism.ism_car_no"/>
+		<result property="ismStatus" column="ism.ism_status"/>
+		<result property="ismTotal" column="ism.ism_total"/>
+		<result property="ismRemark" column="ism.ism_remark"/>
+		<result property="ismCreator" column="ism.ism_creator"/>
+		<result property="ismCreateDate" column="ism.ism_create_date"/>
+		<result property="ismChargebacker" column="ism.ism_chargebacker"/>
+		<result property="ismChargebackDate" column="ism.ism_chargeback_date"/>
+		<result property="ismConfirmor" column="ism.ism_confirmor"/>
+		<result property="ismConfirmDate" column="ism.ism_confirm_date"/>
+		<result property="ismReviewer" column="ism.ism_reviewer"/>
+		<result property="ismReviewDate" column="ism.ism_review_date"/>
+		<collection property="instoreSubs" ofType="InstoreSub">
+			<id property="issId" column="instoreSubs.iss_id"/>
+			<result property="ismId" column="instoreSubs.ism_id"/>
+			<result property="issParentId" column="instoreSubs.iss_parent_id"/>
+			<result property="issPlanQuantity" column="instoreSubs.iss_plan_quantity"/>
+			<result property="issRealQuantity" column="instoreSubs.iss_real_quantity"/>
+			<result property="productQuality" column="instoreSubs.product_quality"/>
+			<result property="issInsertTime" column="instoreSubs.iss_insert_time"/>
+			<result property="issInsertOrder" column="instoreSubs.iss_insert_order"/>
+			<association property="product" javaType="Product">
+				<result property="productId" column="instoreSubs.product.product_id"/>
+				<result property="productName" column="instoreSubs.product.product_name"/>
+				<result property="productUnit" column="instoreSubs.product.product_unit"/>
+				<association property="productCategory" javaType="ProductCategory">
+					<result property="productCategoryId" column="instoreSubs.product.productCategory.product_category_id"/>
+					<result property="productCategoryName" column="instoreSubs.product.productCategory.product_category_name"/>
+				</association>
+			</association>
+			<association property="store" javaType="Store">
+				<result property="storeId" column="instoreSubs.store.store_id"/>
+				<result property="storeName" column="instoreSubs.store.store_name"/>
+				<result property="storeSubParrent" column="instoreSubs.store.store_sub_parrent"/>
+				<result property="storeSubName" column="instoreSubs.store.store_sub_name"/>
+			</association>
+		</collection>
+		
+	</resultMap>
+	
+	<select id="queryWithInstoreSubsById" resultMap="instoreMainWithInstoreSubs" parameterType="int">
+        select 
+			ism.ism_id "ism.ism_id",
+			ism.ism_sn "ism.ism_sn",
+			ism.ism_ticket_no "ism.ism_ticket_no",
+			ism.ism_ticket_time "ism.ism_ticket_time",
+			ism.ism_carrier "ism.ism_carrier",
+			ism.ism_car_no "ism.ism_car_no",
+			ism.ism_status "ism.ism_status",
+			ism.ism_total "ism.ism_total",
+			ism.ism_remark "ism.ism_remark",
+			ism.ism_creator "ism.ism_creator",
+			ism.ism_create_date "ism.ism_create_date",
+			ism.ism_chargebacker "ism.ism_chargebacker",
+			ism.ism_chargeback_date "ism.ism_chargeback_date",
+			ism.ism_confirmor "ism.ism_confirmor",
+			ism.ism_confirm_date "ism.ism_confirm_date",
+			ism.ism_reviewer "ism.ism_reviewer",
+			ism.ism_review_date "ism.ism_review_date",
+			customer.customer_id "customer.customer_id",
+			customer.customer_name "customer.customer_name",
+			customer.customer_company "customer.customer_company",
+			iss.iss_id "instoreSubs.iss_id",
+			iss.ism_id "instoreSubs.ism_id",
+			iss.iss_parent_id "instoreSubs.iss_parent_id",
+			iss.iss_plan_quantity "instoreSubs.iss_plan_quantity",
+			iss.iss_real_quantity "instoreSubs.iss_real_quantity",
+			product.product_id "instoreSubs.product.product_id",
+			product.product_name "instoreSubs.product.product_name",
+			product.product_unit "instoreSubs.product.product_unit",
+			productCategory.product_category_id "instoreSubs.product.productCategory.product_category_id",
+			productCategory.product_category_name "instoreSubs.product.productCategory.product_category_name",
+			iss.product_quality "instoreSubs.product_quality",
+			store.store_id "instoreSubs.store.store_id",
+			store.store_name "instoreSubs.store.store_name",
+			store.store_sub_parrent "instoreSubs.store.store_sub_parrent",
+			store.store_sub_name "instoreSubs.store.store_sub_name",
+			iss.iss_insert_time "instoreSubs.iss_insert_time",
+			iss.iss_insert_order "instoreSubs.iss_insert_order"
+        from 
+        	wms_instore_main ism
+        left join wms_instore_sub iss on iss.ism_id = ism.ism_id
+        left join wms_customer customer on customer.customer_id = ism.customer_id
+        left join wms_product product on product.product_id = iss.product_id
+        left join wms_product_category productCategory on product.product_category_id = productCategory.product_category_id
+		left join wms_store store on store.store_id = iss.store_id
+        where ism.ism_id = #{ismId}
+		order by iss.iss_insert_order,iss_id
+    </select>
 
 	<select id="queryByFileds" resultType="InstoreMain" parameterType="map">
         select 

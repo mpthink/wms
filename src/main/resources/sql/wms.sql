@@ -6,7 +6,7 @@ CREATE SCHEMA IF NOT EXISTS `wms` DEFAULT CHARACTER SET UTF8;
 USE `wms`;
 
 -- -----------------------------------------------------
--- Table `WMS`.`wms_user`
+-- Table `wms`.`wms_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wms`.`wms_user`;
 
@@ -170,7 +170,7 @@ DROP TABLE IF EXISTS `wms`.`wms_instore_sub` ;
 CREATE TABLE IF NOT EXISTS `wms`.`wms_instore_sub` (
   `iss_id` INT unsigned NOT NULL AUTO_INCREMENT,
   `ism_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '入库总表ID',
-  `iss_parent_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '子表父ID，用于分库',
+  `iss_parent_id` INT NOT NULL DEFAULT '0' COMMENT '子表父ID，用于分库，0：未分库子单，-1：已分库子单，>0:已分库小子单',
   `iss_plan_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库计划数量',
   `iss_real_quantity` INT(10) NOT NULL DEFAULT '0' COMMENT '入库实际数量',
   `product_id` INT unsigned NOT NULL DEFAULT '0' COMMENT '产品ID',
@@ -260,4 +260,82 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
     ON UPDATE CASCADE
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '出仓子表';
 
-
+-- -----------------------------------------------------
+-- initial data
+-- -----------------------------------------------------
+-- `wms`.`wms_role`;
+insert into `wms`.`wms_role`(`role_name`,`role_permission`) values ('超级管理员','所有权限'),('入单员','入单'),('仓管员','仓管'),('搬运工','搬运');
+-- `wms`.`wms_user`
+insert into `wms`.`wms_user`
+	(`user_name`,`user_realname`,`user_password`,`user_email`,`user_phone`,`user_last_logintime`,`user_last_loginip`,`user_status`,`user_role_id`)
+values
+	('mpthink','paul','123','test@163.com','13551178888','2016-10-30 00:00:00','10.11.22.33',1,1),
+	('mayiyang','xiamage','123','test@163.com','13551170000','2016-10-31 00:00:00','10.11.22.33',1,3),
+	('yangyeye','xiaoyang','123','test@163.com','13551179999','2016-10-30 00:00:00','10.11.22.33',1,2);
+-- `wms`.`wms_notice`
+insert into `wms`.`wms_notice`(`notice_title`,`notice_content`,`user_id`)
+values 
+	('通知1','通知内容1',1),
+	('通知2','通知内容2',2),
+	('通知3','通知内容3',3);
+-- `wms`.`wms_log`
+insert into `wms`.`wms_log`(`log_action`,`user_id`)
+values
+	('操作1',1),
+	('操作2',2),
+	('操作3',3);
+-- `wms`.`wms_store`
+insert into `wms`.`wms_store`(`store_name`,`store_sub_parrent`,`store_sub_name`,`store_address`,`store_total_space`,`store_manager`)
+values
+	('总仓库1',0,'','总仓库1地址','300m3',1),
+	('总仓库2',0,'','总仓库2地址','300m3',1),
+	('总仓库1',1,'总仓库1分区A','总仓库1地址','300m3',1),
+	('总仓库1',1,'总仓库1分区B','总仓库1地址','300m3',1),
+	('总仓库2',2,'总仓库2分区A','总仓库2地址','300m3',1),
+	('总仓库2',2,'总仓库2分区B','总仓库2地址','300m3',1);
+-- `wms`.`wms_product_category`
+insert into `wms`.`wms_product_category`(`product_category_parentid`,`product_category_name`)
+values
+	(0,'赠品'),
+	(0,'热水器'),
+	(1,'赠品分类1');
+-- `wms`.`wms_product`
+insert into 
+	`wms`.`wms_product`(`product_name`,`product_category_id`,`customer_id`,`product_market_price`,`product_cost_price`,`product_volume`,`product_unit`)
+values
+	('史密斯热水器',2,1,2.00,1.00,'1m3','台'),
+	('史密斯热水器2',2,1,2.00,1.00,'1m3','台'),
+	('飞刀',1,1,2.00,1.00,'1m3','个');
+-- `wms`.`wms_customer_category`
+insert into `wms`.`wms_customer_category`(`customer_category_name`)
+values
+	('电器'),('酒水');
+-- `wms`.`wms_customer`
+insert into `wms`.`wms_customer`(`customer_name`,`customer_way_pay`,`customer_way_out`,`customer_company`,`customer_address`,`customer_phone`,`customer_category_id`)
+values
+	('史密斯','预付','预发','史密斯有限责任公司','成都','13438960666',1),
+	('格力','预付','预发','格力有限责任公司','成都','13438960666',1);
+-- `wms`.`wms_instore_main`
+insert into `wms`.`wms_instore_main`
+	(`ism_sn`,`ism_ticket_no`,`ism_ticket_time`,`ism_carrier`,`ism_car_no` ,`ism_status`,`ism_total` ,`ism_remark`,`ism_creator`,`ism_chargebacker`,`ism_chargeback_date`,`ism_confirmor`,`ism_confirm_date`,
+`ism_reviewer`,`ism_review_date`,`customer_id`)
+values
+	('in-123','test123','2016-10-30 00:00:00','mayiyang','A12345',1,100,'remark','创建人','退单人','2016-10-30 00:00:00','审核人','2016-10-30 00:00:00','复核人','2016-10-30 00:00:00',1),
+	('in-1234','test1234','2016-10-31 00:00:00','mayiyang','A12345',1,100,'remark','创建人','退单人','2016-10-30 00:00:00','审核人','2016-10-30 00:00:00','复核人','2016-10-30 00:00:00',1);
+-- `wms`.`wms_instore_sub`
+insert into `wms`.`wms_instore_sub`(`ism_id`,`iss_plan_quantity`,`iss_real_quantity` ,`product_id`,`product_quality`,`store_id`,`iss_insert_order`)
+values
+	(1,20,20,1,1,1,0),
+	(1,30,30,2,1,1,1);
+-- `wms`.`wms_outstore_main`
+insert into `wms`.`wms_outstore_main`
+	(`osm_sn`,`osm_ticket_no`,`osm_ticket_time`,`osm_carrier`,`osm_car_no`,`osm_status`,`osm_total`,`osm_remark`,`osm_creator`,`osm_chargebacker`,`osm_chargeback_date`,`osm_confirmor`,`osm_confirm_date`,
+	`osm_reviewer`,`osm_review_date`,`customer_id`)
+values
+	('out-123','测试123','2016-10-30 00:00:00','mayiyang','A12345',1,100,'remark','创建人','退单人','2016-10-30 00:00:00','审核人','2016-10-30 00:00:00','复核人','2016-10-30 00:00:00',1),
+	('out-1234','测试1234','2016-10-30 00:00:00','mayiyang','A12345',1,100,'remark','创建人','退单人','2016-10-30 00:00:00','审核人','2016-10-30 00:00:00','复核人','2016-10-30 00:00:00',1);
+-- `wms`.`wms_outstore_sub`
+insert into `wms`.`wms_outstore_sub`(`osm_id`,`oss_plan_quantity`,`oss_real_quantity`,`product_id`,`product_quality`,`store_id`,`oss_insert_order`)
+values
+	(1,20,20,1,1,1,0),
+	(1,30,30,2,1,1,1);

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.OutstoreSubDao">    
+
+    <insert id="insertOutstoreSub" parameterType="List">
+    	insert into
+    		wms_outstore_sub
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="osmId != 0">osm_id,</if>
+			<if test="ossPlanQuantity != 0">oss_plan_quantity,</if>
+			<if test="ossRealQuantity != 0">oss_real_quantity,</if>
+			<if test="product.productId != 0">product_id,</if>
+			<if test="productQuality != 0">product_quality,</if>
+			<if test="store.storeId != 0">store_id,</if>
+			<if test="ossInsertOrder != 0">oss_insert_order,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="osmId != 0">#{osmId},</if>
+			<if test="ossPlanQuantity != 0">#{ossPlanQuantity},</if>
+			<if test="ossRealQuantity != 0">#{ossRealQuantity},</if>
+			<if test="product.productId != 0">#{product.productId},</if>
+			<if test="productQuality != 0">#{productQuality},</if>
+			<if test="store.storeId != 0">#{store.storeId},</if>
+			<if test="ossInsertOrder != 0">#{ossInsertOrder},</if>
+		</trim>
+    </insert>
+    
+    <insert id="insertOutstoreSubList" parameterType="List">
+    	insert into
+    		wms_outstore_sub(osm_id,oss_plan_quantity,oss_real_quantity,product_id,product_quality,store_id,oss_insert_order)
+		values
+		<foreach collection="list" item="item" separator=",">
+			( #{item.osmId},#{item.ossPlanQuantity},#{item.ossRealQuantity},
+			  #{item.product.productId},#{item.productQuality},#{item.store.storeId},#{item.ossInsertOrder} )
+		</foreach>
+    </insert>
+    
+	<delete id="deleteOutstoreSubByOssId" parameterType="int">
+		delete
+			from wms_outstore_sub
+		where
+			oss_id=#{ossId}
+	</delete>
+	
+	<delete id="deleteOutstoreSubByOsmId" parameterType="int">
+		delete
+			from wms_outstore_sub
+		where
+			osm_id=#{osmId}
+	</delete>
+	
+	<delete id="deleteOutstoreSubByOssParentId" parameterType="int">
+		delete
+			from wms_outstore_sub
+		<where>
+			<if test="ossParentId !=0">oss_parent_id=#{ossParentId}</if>
+		</where>
+	</delete>
+    
+    <update id="updateOutstoreSub" parameterType="OutstoreSub">
+    	update 
+    		wms_outstore_sub
+    	<trim prefix="set" suffixOverrides=",">
+    		<if test="osmId != 0">osm_id=#{osmId},</if>
+			<if test="ossPlanQuantity != 0">oss_plan_quantity=#{ossPlanQuantity},</if>
+			<if test="ossRealQuantity != 0">oss_real_quantity=#{ossRealQuantity},</if>
+			<if test="product.productId != 0">product_id=#{product.productId},</if>
+			<if test="productQuality != 0">product_quality=#{productQuality},</if>
+			<if test="store.storeId != 0">store_id=#{store.storeId},</if>
+			<if test="ossInsertOrder != 0">oss_insert_order=#{ossInsertOrder},</if>
+		</trim>
+    	where
+    		oss_id=#{ossId}
+    </update>
+	
+	<!-- 学习下使用resultMap -->
+	<resultMap type="OutstoreSub" id="outstoreSubResultMap">
+		<id property="ossId" column="oss_id"/>
+		<result property="osmId" column="osm_id"/>
+		<result property="ossPlanQuantity" column="oss_plan_quantity"/>
+		<result property="ossRealQuantity" column="oss_real_quantity"/>
+		<result property="productQuality" column="product_quality"/>
+		<association property="product" javaType="Product">
+			<id property="productId" column="product_id"/>
+			<result property="productName" column="product_name"/>
+			<result property="productUnit" column="product_unit"/>
+		</association>
+		<association property="store" javaType="Store">
+			<id property="storeId" column="store_id"/>
+			<id property="storeName" column="store_name"/>
+			<id property="storeSubParrent" column="store_sub_parrent"/>
+			<id property="storeSubName" column="store_sub_name"/>
+		</association>
+	</resultMap>
+
+	<select id="queryById" resultMap="outstoreSubResultMap" parameterType="int">
+		select
+			oss_id,
+			osm_id,
+			oss_plan_quantity,
+			oss_real_quantity,
+			product.product_id "product_id",
+			product.product_name "product_name",
+			product.product_unit "product_unit",
+			oss.product_quality,
+			store.store_id "store_id",
+			store.store_name "store_name",
+			store.store_sub_parrent "store_sub_parrent",
+			store.store_sub_name "store_sub_name",
+			oss_insert_time,
+			oss_insert_order
+		from 
+			wms_outstore_sub oss
+		left join wms_product product on product.product_id = oss.product_id
+		left join wms_store store on store.store_id = oss.store_id
+		where
+			oss_id=#{ossId}
+	</select>
+	
+	<select id="queryByFileds" resultType="OutstoreSub" parameterType="map">
+		select
+			oss_id,
+			oss.osm_id "osm_id",
+			oss_plan_quantity,
+			oss_real_quantity,
+			product.product_id "product.product_id",
+			product.product_name "product.product_name",
+			product.product_unit "product.product_unit",
+			oss.product_quality,
+			store.store_id "store.store_id",
+			store.store_name "store.store_name",
+			store.store_sub_parrent "store.store_sub_parrent",
+			store.store_sub_name "store.store_sub_name",
+			oss_insert_time,
+			oss_insert_order,
+			outstoreMain.osm_id "outstoreMain.osm_id",
+			outstoreMain.osm_ticket_no "outstoreMain.osm_ticket_no",
+			outstoreMain.osm_ticket_time "outstoreMain.osm_ticket_time",
+			outstoreMain.osm_carrier "outstoreMain.osm_carrier",
+			outstoreMain.osm_status "outstoreMain.osm_status",
+			outstoreMain.osm_creator "outstoreMain.osm_creator",
+			outstoreMain.osm_create_date "outstoreMain.osm_create_date",
+			outstoreMain.osm_chargebacker "outstoreMain.osm_chargebacker",
+			outstoreMain.osm_chargeback_date "outstoreMain.osm_chargeback_date",
+			outstoreMain.osm_confirmor "outstoreMain.osm_confirmor",
+			outstoreMain.osm_confirm_date "outstoreMain.osm_confirm_date",
+			outstoreMain.osm_reviewer "outstoreMain.osm_reviewer",
+			outstoreMain.osm_review_date "outstoreMain.osm_reveiw_date",
+			customer.customer_id "outstoreMain.customer.customer_id",
+			customer.customer_name "outstoreMain.customer.customer_name"
+		from 
+			wms_outstore_sub oss
+		left join wms_product product on product.product_id = oss.product_id
+		left join wms_store store on store.store_id = oss.store_id
+		left join wms_outstore_main outstoreMain on outstoreMain.osm_id = oss.osm_id
+		left join wms_customer customer on customer.customer_id = outstoreMain.customer_id
+		<trim prefix="where " suffixOverrides="and |or ">
+        	<if test="osmTicketNo != null">osm_ticket_no like CONCAT('%',#{osmTicketNo},'%') and</if>
+        	<if test="osmCarrier != null">osm_carrier like CONCAT('%',#{osmCarrier},'%') and</if>
+        	<if test="customerName != null">customer.customer_name like CONCAT('%',#{customerName},'%') and</if>
+        	<if test="osmCreator != null">osm_creator like CONCAT('%',#{osmCreator},'%') and</if>
+        	<if test="osmChargebacker != null">osm_chargebacker like CONCAT('%',#{osmTicketNo},'%') and</if>
+        	<if test="osmConfirmor != null">osm_confirmor like CONCAT('%',#{osmConfirmor},'%') and</if>
+        	<if test="osmreviewer != null">osm_reviewer like CONCAT('%',#{osmreviewer},'%') and</if>
+        	<if test="osmStatus != null">osm_status = #{osmStatus} and</if>
+        	<if test="osmCreateDateBegin != null">osm_create_date >= osmCreateDateBegin and</if>
+        	<if test="osmCreateDateEnd != null">osm_create_date <![CDATA[ <= ]]> osmCreateDateEnd and</if>
+        	<if test="productName != null">product.product_name like CONCAT('%',#{productName},'%') and</if>
+        </trim>
+        order by outstoreMain.osm_status asc,outstoreMain.osm_id desc
+	</select>
+
+	<select id="queryAll" resultType="OutstoreSub">
+		select
+			oss_id,
+			oss.osm_id "osm_id",
+			oss_plan_quantity,
+			oss_real_quantity,
+			product.product_id "product.product_id",
+			product.product_name "product.product_name",
+			product.product_unit "product.product_unit",
+			oss.product_quality,
+			store.store_id "store.store_id",
+			store.store_name "store.store_name",
+			store.store_sub_parrent "store.store_sub_parrent",
+			store.store_sub_name "store.store_sub_name",
+			oss_insert_time,
+			oss_insert_order,
+			outstoreMain.osm_id "outstoreMain.osm_id",
+			outstoreMain.osm_ticket_no "outstoreMain.osm_ticket_no",
+			outstoreMain.osm_ticket_time "outstoreMain.osm_ticket_time",
+			outstoreMain.osm_carrier "outstoreMain.osm_carrier",
+			outstoreMain.osm_status "outstoreMain.osm_status",
+			outstoreMain.osm_creator "outstoreMain.osm_creator",
+			outstoreMain.osm_create_date "outstoreMain.osm_create_date",
+			outstoreMain.osm_chargebacker "outstoreMain.osm_chargebacker",
+			outstoreMain.osm_chargeback_date "outstoreMain.osm_chargeback_date",
+			outstoreMain.osm_confirmor "outstoreMain.osm_confirmor",
+			outstoreMain.osm_confirm_date "outstoreMain.osm_confirm_date",
+			outstoreMain.osm_reviewer "outstoreMain.osm_reviewer",
+			outstoreMain.osm_review_date "outstoreMain.osm_reveiw_date",
+			customer.customer_id "outstoreMain.customer.customer_id",
+			customer.customer_name "outstoreMain.customer.customer_name"
+		from 
+			wms_outstore_sub oss
+		left join wms_product product on product.product_id = oss.product_id
+		left join wms_store store on store.store_id = oss.store_id
+		left join wms_outstore_main outstoreMain on outstoreMain.osm_id = oss.osm_id
+		left join wms_customer customer on customer.customer_id = outstoreMain.customer_id
+        order by outstoreMain.osm_status asc,outstoreMain.osm_id desc
+	</select>
+
+</mapper>

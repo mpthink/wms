@@ -1,6 +1,7 @@
 package com.think.wms.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class InstoreMain {
 
@@ -22,6 +23,7 @@ public class InstoreMain {
 	private String ismReviewer;
 	private Date ismReviewDate;
 	private Customer customer;
+	private List<InstoreSub> instoreSubs;
 
 	public int getIsmId() {
 		return ismId;
@@ -167,13 +169,21 @@ public class InstoreMain {
 		this.customer = customer;
 	}
 
+	public List<InstoreSub> getInstoreSubs() {
+		return instoreSubs;
+	}
+
+	public void setInstoreSubs(List<InstoreSub> instoreSubs) {
+		this.instoreSubs = instoreSubs;
+	}
+
 	@Override
 	public String toString() {
 		return "InstoreMain [ismId=" + ismId + ", ismSn=" + ismSn + ", ismTicketNo=" + ismTicketNo + ", ismTicketTime=" + ismTicketTime
 			+ ", ismCarrier=" + ismCarrier + ", ismCarNo=" + ismCarNo + ", ismStatus=" + ismStatus + ", ismTotal=" + ismTotal + ", ismRemark="
 			+ ismRemark + ", ismCreator=" + ismCreator + ", ismCreateDate=" + ismCreateDate + ", ismChargebacker=" + ismChargebacker
 			+ ", ismChargebackDate=" + ismChargebackDate + ", ismConfirmor=" + ismConfirmor + ", ismConfirmDate=" + ismConfirmDate + ", ismReviewer="
-			+ ismReviewer + ", ismReviewDate=" + ismReviewDate + ", customer=" + customer + "]";
+			+ ismReviewer + ", ismReviewDate=" + ismReviewDate + ", customer=" + customer + ", instoreSubs=" + instoreSubs + "]";
 	}
 
 }

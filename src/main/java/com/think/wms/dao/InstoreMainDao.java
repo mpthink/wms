@@ -15,6 +15,8 @@ public interface InstoreMainDao {
 
 	InstoreMain queryById(int ismId);
 
+	InstoreMain queryWithInstoreSubsById(int ismId);
+
 	List<InstoreMain> queryByFileds(Map<String, Object> map);
 
 	List<InstoreMain> queryAll();

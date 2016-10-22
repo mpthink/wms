@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.think.wms.dao.InstoreSubDao">    
-    
+
     <insert id="insertInstoreSub" parameterType="List">
     	insert into
     		wms_instore_sub
@@ -77,46 +77,92 @@
     	where
     		iss_id=#{issId}
     </update>
-    
-    <select id="queryById" resultType="InstoreSub" parameterType="int">
-        select 
-			
-			customer.customer_id "customer.customer_id",
-			customer.customer_name "customer.customer_name",
-			customer.customer_company "customer.customer_company"
-        from 
-        	wms_instore_sub ism
-        left join wms_customer customer on customer.customer_id = ism.customer_id
-        where ism.ism_id = #{ismId}
-        order by ism.ism_create_date
-    </select>
+	
+	<!-- 学习下使用resultMap -->
+	<resultMap type="InstoreSub" id="instoreSubResultMap">
+		<id property="issId" column="iss_id"/>
+		<result property="ismId" column="ism_id"/>
+		<result property="issParentId" column="iss_parent_id"/>
+		<result property="issPlanQuantity" column="iss_plan_quantity"/>
+		<result property="issRealQuantity" column="iss_real_quantity"/>
+		<result property="productQuality" column="product_quality"/>
+		<association property="product" javaType="Product">
+			<id property="productId" column="product_id"/>
+			<result property="productName" column="product_name"/>
+			<result property="productUnit" column="product_unit"/>
+		</association>
+		<association property="store" javaType="Store">
+			<id property="storeId" column="store_id"/>
+			<id property="storeName" column="store_name"/>
+			<id property="storeSubParrent" column="store_sub_parrent"/>
+			<id property="storeSubName" column="store_sub_name"/>
+		</association>
+	</resultMap>
 
+	<select id="queryById" resultMap="instoreSubResultMap" parameterType="int">
+		select
+			iss_id,
+			ism_id,
+			iss_parent_id,
+			iss_plan_quantity,
+			iss_real_quantity,
+			product.product_id "product_id",
+			product.product_name "product_name",
+			product.product_unit "product_unit",
+			iss.product_quality,
+			store.store_id "store_id",
+			store.store_name "store_name",
+			store.store_sub_parrent "store_sub_parrent",
+			store.store_sub_name "store_sub_name",
+			iss_insert_time,
+			iss_insert_order
+		from 
+			wms_instore_sub iss
+		left join wms_product product on product.product_id = iss.product_id
+		left join wms_store store on store.store_id = iss.store_id
+		where
+			iss_id=#{issId}
+	</select>
+	
 	<select id="queryByFileds" resultType="InstoreSub" parameterType="map">
-        select 
-			ism.ism_id,
-			ism.ism_sn,
-			ism.ism_ticket_no,
-			ism.ism_ticket_time,
-			ism.ism_carrier,
-			ism.ism_car_no,
-			ism.ism_status,
-			ism.ism_total,
-			ism.ism_remark,
-			ism.ism_creator,
-			ism.ism_create_date,
-			ism.ism_chargebacker,
-			ism.ism_chargeback_date,
-			ism.ism_confirmor,
-			ism.ism_confirm_date,
-			ism.ism_reviewer,
-			ism.ism_review_date,
-			customer.customer_id "customer.customer_id",
-			customer.customer_name "customer.customer_name",
-			customer.customer_company "customer.customer_company"
-        from 
-        	wms_instore_sub ism
-        left join wms_customer customer on customer.customer_id = ism.customer_id
-        <trim prefix="where " suffixOverrides="and |or ">
+		select
+			iss_id,
+			iss.ism_id "ism_id",
+			iss_parent_id,
+			iss_plan_quantity,
+			iss_real_quantity,
+			product.product_id "product.product_id",
+			product.product_name "product.product_name",
+			product.product_unit "product.product_unit",
+			iss.product_quality,
+			store.store_id "store.store_id",
+			store.store_name "store.store_name",
+			store.store_sub_parrent "store.store_sub_parrent",
+			store.store_sub_name "store.store_sub_name",
+			iss_insert_time,
+			iss_insert_order,
+			instoreMain.ism_id "instoreMain.ism_id",
+			instoreMain.ism_ticket_no "instoreMain.ism_ticket_no",
+			instoreMain.ism_ticket_time "instoreMain.ism_ticket_time",
+			instoreMain.ism_carrier "instoreMain.ism_carrier",
+			instoreMain.ism_status "instoreMain.ism_status",
+			instoreMain.ism_creator "instoreMain.ism_creator",
+			instoreMain.ism_create_date "instoreMain.ism_create_date",
+			instoreMain.ism_chargebacker "instoreMain.ism_chargebacker",
+			instoreMain.ism_chargeback_date "instoreMain.ism_chargeback_date",
+			instoreMain.ism_confirmor "instoreMain.ism_confirmor",
+			instoreMain.ism_confirm_date "instoreMain.ism_confirm_date",
+			instoreMain.ism_reviewer "instoreMain.ism_reviewer",
+			instoreMain.ism_review_date "instoreMain.ism_reveiw_date",
+			customer.customer_id "instoreMain.customer.customer_id",
+			customer.customer_name "instoreMain.customer.customer_name"
+		from 
+			wms_instore_sub iss
+		left join wms_product product on product.product_id = iss.product_id
+		left join wms_store store on store.store_id = iss.store_id
+		left join wms_instore_main instoreMain on instoreMain.ism_id = iss.ism_id
+		left join wms_customer customer on customer.customer_id = instoreMain.customer_id
+		<trim prefix="where " suffixOverrides="and |or ">
         	<if test="ismTicketNo != null">ism_ticket_no like CONCAT('%',#{ismTicketNo},'%') and</if>
         	<if test="ismCarrier != null">ism_carrier like CONCAT('%',#{ismCarrier},'%') and</if>
         	<if test="customerName != null">customer.customer_name like CONCAT('%',#{customerName},'%') and</if>
@@ -127,35 +173,50 @@
         	<if test="ismStatus != null">ism_status = #{ismStatus} and</if>
         	<if test="ismCreateDateBegin != null">ism_create_date >= ismCreateDateBegin and</if>
         	<if test="ismCreateDateEnd != null">ism_create_date <![CDATA[ <= ]]> ismCreateDateEnd and</if>
+        	<if test="productName != null">product.product_name like CONCAT('%',#{productName},'%') and</if>
         </trim>
-        order by ism.ism_create_date
-    </select>
-    
-    <select id="queryAll" resultType="InstoreSub">
-        select 
-			ism.ism_id,
-			ism.ism_sn,
-			ism.ism_ticket_no,
-			ism.ism_ticket_time,
-			ism.ism_carrier,
-			ism.ism_car_no,
-			ism.ism_status,
-			ism.ism_total,
-			ism.ism_remark,
-			ism.ism_creator,
-			ism.ism_create_date,
-			ism.ism_chargebacker,
-			ism.ism_chargeback_date,
-			ism.ism_confirmor,
-			ism.ism_confirm_date,
-			ism.ism_reviewer,
-			ism.ism_review_date,
-			customer.customer_id "customer.customer_id",
-			customer.customer_name "customer.customer_name",
-			customer.customer_company "customer.customer_company"
-        from 
-        	wms_instore_sub ism
-        left join wms_customer customer on customer.customer_id = ism.customer_id
-        order by ism.ism_create_date
-    </select>
+        order by instoreMain.ism_status asc,instoreMain.ism_id desc
+	</select>
+
+	<select id="queryAll" resultType="InstoreSub">
+		select
+			iss_id,
+			iss.ism_id "ism_id",
+			iss_parent_id,
+			iss_plan_quantity,
+			iss_real_quantity,
+			product.product_id "product.product_id",
+			product.product_name "product.product_name",
+			product.product_unit "product.product_unit",
+			iss.product_quality,
+			store.store_id "store.store_id",
+			store.store_name "store.store_name",
+			store.store_sub_parrent "store.store_sub_parrent",
+			store.store_sub_name "store.store_sub_name",
+			iss_insert_time,
+			iss_insert_order,
+			instoreMain.ism_id "instoreMain.ism_id",
+			instoreMain.ism_ticket_no "instoreMain.ism_ticket_no",
+			instoreMain.ism_ticket_time "instoreMain.ism_ticket_time",
+			instoreMain.ism_carrier "instoreMain.ism_carrier",
+			instoreMain.ism_status "instoreMain.ism_status",
+			instoreMain.ism_creator "instoreMain.ism_creator",
+			instoreMain.ism_create_date "instoreMain.ism_create_date",
+			instoreMain.ism_chargebacker "instoreMain.ism_chargebacker",
+			instoreMain.ism_chargeback_date "instoreMain.ism_chargeback_date",
+			instoreMain.ism_confirmor "instoreMain.ism_confirmor",
+			instoreMain.ism_confirm_date "instoreMain.ism_confirm_date",
+			instoreMain.ism_reviewer "instoreMain.ism_reviewer",
+			instoreMain.ism_review_date "instoreMain.ism_reveiw_date",
+			customer.customer_id "instoreMain.customer.customer_id",
+			customer.customer_name "instoreMain.customer.customer_name"
+		from 
+			wms_instore_sub iss
+		left join wms_product product on product.product_id = iss.product_id
+		left join wms_store store on store.store_id = iss.store_id
+		left join wms_instore_main instoreMain on instoreMain.ism_id = iss.ism_id
+		left join wms_customer customer on customer.customer_id = instoreMain.customer_id
+        order by instoreMain.ism_status asc,instoreMain.ism_id desc
+	</select>
+
 </mapper>

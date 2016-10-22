@@ -69,9 +69,15 @@ public class InstoreMainDaoTest {
 	}
 
 	@Test
+	public void testQueryWithInstoreSubsById() {
+		InstoreMain instoreMain = instoreMainDao.queryWithInstoreSubsById(1);
+		System.out.println(instoreMain);
+	}
+
+	@Test
 	public void testQueryByFileds() {
 		Map<String, Object> queryMap = new HashMap<>();
-		queryMap.put("ismTicketNo", "2016");
+		queryMap.put("ismTicketNo", "1234");
 		queryMap.put("ismreviewer", "人");
 		List<InstoreMain> instoreMains = instoreMainDao.queryByFileds(queryMap);
 		System.out.println(instoreMains);
