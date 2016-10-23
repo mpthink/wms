@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.think.wms.entity.Role;
 import com.think.wms.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,8 +28,6 @@ public class UserDaoTest {
 		Date userLastLogintime = new Date();
 		String userLastLoginip = "10.11.22.33";
 		int userStatus = 1;
-		Role role = new Role();
-		role.setRoleId(1);
 		User user = new User();
 		user.setUserName(userName);
 		user.setUserRealname(userRealname);
@@ -40,7 +37,7 @@ public class UserDaoTest {
 		user.setUserLastLogintime(userLastLogintime);
 		user.setUserLastLoginip(userLastLoginip);
 		user.setUserStatus(userStatus);
-		user.setRole(role);
+		user.setRoleId(1);
 		int result = userDao.insertUser(user);
 		System.out.println(result);
 	}
@@ -62,8 +59,6 @@ public class UserDaoTest {
 		Date userLastLogintime = new Date();
 		String userLastLoginip = "10.11.22.33";
 		int userStatus = 2;
-		Role role = new Role();
-		role.setRoleId(2);
 		User user = new User();
 		user.setUserId(userId);
 		user.setUserName(userName);
@@ -74,7 +69,7 @@ public class UserDaoTest {
 		user.setUserLastLogintime(userLastLogintime);
 		user.setUserLastLoginip(userLastLoginip);
 		user.setUserStatus(userStatus);
-		user.setRole(role);
+		user.setRoleId(2);
 		int result = userDao.updateUser(user);
 		System.out.println(result);
 	}

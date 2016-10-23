@@ -15,7 +15,7 @@
 			<if test="userLastLogintime != null">user_last_logintime,</if>
 			<if test="userLastLoginip != null">user_last_loginip,</if>
 			<if test="userStatus != 0">user_status,</if>
-			<if test="role.roleId != 0">user_role_id,</if>
+			<if test="roleId != 0">user_role_id,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="userName != null">#{userName,jdbcType=VARCHAR},</if>
@@ -26,7 +26,7 @@
 			<if test="userLastLogintime != null">#{userLastLogintime},</if>
 			<if test="userLastLoginip != null">#{userLastLoginip},</if>
 			<if test="userStatus != 0">#{userStatus},</if>
-			<if test="role.roleId != 0">#{role.roleId},</if>
+			<if test="roleId != 0">#{roleId},</if>
 		</trim>
 	</insert>
     
@@ -49,7 +49,7 @@
 			<if test="userLastLogintime != null">user_last_logintime=#{userLastLogintime},</if>
 			<if test="userLastLoginip != null">user_last_loginip=#{userLastLoginip},</if>
 			<if test="userStatus != 0">user_status=#{userStatus},</if>
-			<if test="role.roleId != 0">user_role_id=#{role.roleId},</if>
+			<if test="roleId != 0">user_role_id=#{roleId},</if>
     	</trim>
     	where
     		user_id=#{userId}
@@ -67,9 +67,8 @@
         	user.user_last_logintime,
         	user.user_last_loginip,
         	user.user_status,
-        	role.role_id "role.role_id",
-        	role.role_name "role.role_name",
-        	role.role_permission "role.role_permission"
+        	role.role_id "role_id",
+        	role.role_name "role_name"
         from 
         	wms_user user
         inner join wms_role role on user.user_role_id = role.role_id
@@ -89,9 +88,8 @@
         	user.user_last_logintime,
         	user.user_last_loginip,
         	user.user_status,
-        	role.role_id "role.role_id",
-        	role.role_name "role.role_name",
-        	role.role_permission "role.role_permission"
+        	role.role_id "role_id",
+        	role.role_name "role_name"
         from 
         	wms_user user
         inner join wms_role role on user.user_role_id = role.role_id
@@ -111,9 +109,8 @@
         	user.user_last_logintime,
         	user.user_last_loginip,
         	user.user_status,
-        	role.role_id "role.role_id",
-        	role.role_name "role.role_name",
-        	role.role_permission "role.role_permission"
+        	role.role_id "role_id",
+        	role.role_name "role_name"
         from 
         	wms_user user
         inner join wms_role role on user.user_role_id = role.role_id
@@ -133,9 +130,8 @@
         	user.user_last_logintime,
         	user.user_last_loginip,
         	user.user_status,
-        	role.role_id "role.role_id",
-        	role.role_name "role.role_name",
-        	role.role_permission "role.role_permission"
+        	role.role_id "role_id",
+        	role.role_name "role_name"
         from 
         	wms_user user
         left join wms_role role on user.user_role_id = role.role_id

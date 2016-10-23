@@ -18,7 +18,8 @@ public class User {
 	private Date userLastLogintime;
 	private String userLastLoginip;
 	private int userStatus;
-	private Role role;
+	private int roleId;
+	private String roleName;
 
 	public long getUserId() {
 		return userId;
@@ -100,19 +101,29 @@ public class User {
 		this.userStatus = userStatus;
 	}
 
-	public Role getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", userRealname=" + userRealname + ", userPassword=" + userPassword
 			+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userCreateTime=" + userCreateTime + ", userLastLogintime="
-			+ userLastLogintime + ", userLastLoginip=" + userLastLoginip + ", userStatus=" + userStatus + ", role=" + role + "]";
+			+ userLastLogintime + ", userLastLoginip=" + userLastLoginip + ", userStatus=" + userStatus + ", roleId=" + roleId + ", roleName="
+			+ roleName + "]";
 	}
+
 
 }
