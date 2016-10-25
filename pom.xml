@@ -59,6 +59,12 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		<!-- logback extensions for spring -->
+		<dependency>
+		    <groupId>org.logback-extensions</groupId>
+		    <artifactId>logback-ext-spring</artifactId>
+		    <version>0.1.4</version>
+		</dependency>
 		<!-- servlet dependencies -->
 		<dependency>
             <groupId>taglibs</groupId>

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
+
+	<!-- 定义日志文件 输入位置 -->  
+    <property name="log_dir" value="./src/" />  
+    <!-- 日志最大的历史 30天 -->  
+    <property name="maxHistory" value="30"/>  
+    
+    <!-- DEBUG级别日志 appender -->  
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <!-- 过滤器，只记录DEBUG级别的日志 -->  
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>DEBUG</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/debug-log.log  
+            </fileNamePattern>  
+            <!-- 日志最大的历史 30天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+    
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are  by default assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
