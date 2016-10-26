@@ -14,9 +14,9 @@
 <!-- FastClick -->
 <script src="${ctx}/static/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="${ctx}/static/dist/js/app.min.js"></script>
+<script src="${ctx}/static/lte/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="${ctx}/static/dist/js/demo.js"></script>
+<script src="${ctx}/static/lte/js/demo.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
