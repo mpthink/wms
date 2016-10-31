@@ -36,7 +36,7 @@
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
-						<table id="roleList" class="table table-bordered table-hover">
+						<table id="roleList" class="table table-bordered table-striped">
 							<thead>
 							<tr>
 								<th>角色名称</th>
@@ -49,9 +49,7 @@
 									<tr>
 										<td>${role.roleName}</td>
 										<td>${role.rolePermission}</td>
-										<td>
-											test
-										</td>
+										<td>test</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -73,15 +71,7 @@
 <!-- page script -->
 <script>
   $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
+	  $("#roleList").DataTable();
   });
 </script>
 

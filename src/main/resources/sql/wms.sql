@@ -20,10 +20,17 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_user` (
 	`user_create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '用户创建时间',
 	`user_last_logintime` TIMESTAMP NOT NULL COMMENT '最后登陆时间',
     `user_last_loginip` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '最后登陆IP',
-	`user_status` SMALLINT(4) unsigned NOT NULL DEFAULT '0' COMMENT '用户状态',
-	`user_role_id` SMALLINT(4) unsigned NOT NULL DEFAULT '0' COMMENT '用户角色',
+	`user_status` SMALLINT(4) unsigned NOT NULL DEFAULT '0' COMMENT '用户状态'
 	PRIMARY KEY (`user_id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '用户表';
+
+-- `wms`.`wms_user`
+insert into `wms`.`wms_user`
+	(`user_name`,`user_realname`,`user_password`,`user_email`,`user_phone`,`user_last_logintime`,`user_last_loginip`,`user_status`)
+values
+	('mpthink','paul','123','test@163.com','13551178888','2016-10-30 00:00:00','10.11.22.33',1),
+	('mayiyang','xiamage','123','test@163.com','13551170000','2016-10-31 00:00:00','10.11.22.33',1),
+	('yangyeye','xiaoyang','123','test@163.com','13551179999','2016-10-30 00:00:00','10.11.22.33',1);
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_role`
@@ -33,9 +40,35 @@ DROP TABLE IF EXISTS `wms`.`wms_role`;
 CREATE TABLE IF NOT EXISTS `WMS`.`wms_role`(
 	`role_id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
 	`role_name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '角色名称',
-	`role_permission` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '角色权限',
+	`role_code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '角色代码',
+	`role_description` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '角色说明',
 	PRIMARY KEY (`role_id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '角色信息表';
+
+-- `wms`.`wms_role` data;
+insert into `wms`.`wms_role`(`role_name`,`role_permission`) 
+values ('superadmin','superadmin','超级管理员'),('admin','admin','管理员'),('仓管','storekeeper','仓管员'),('搬运工','carrier','搬运工'),('录单员','inputer','录单员');
+
+-- -----------------------------------------------------
+-- Table `wms`.`wms_permission`
+-- -----------------------------------------------------
+CREATE TABLE `wms`.`wms_permission` (
+  `permission_id` int(11) NOT NULL AUTO_INCREMENT,
+  `PID` int(11) DEFAULT NULL COMMENT '父节点名称',
+  `NAME` varchar(50) NOT NULL COMMENT '名称',
+  `TYPE` varchar(20) DEFAULT NULL COMMENT '类型:菜单or功能',
+  `SORT` int(11) DEFAULT NULL COMMENT '排序',
+  `URL` varchar(255) DEFAULT NULL,
+  `PERM_CODE` varchar(50) DEFAULT NULL COMMENT '菜单编码',
+  `ICON` varchar(255) DEFAULT NULL,
+  `STATE` varchar(10) DEFAULT NULL,
+  `DESCRIPTION` text,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8;
+
+
+
+
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_notice`
@@ -263,15 +296,8 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
 -- -----------------------------------------------------
 -- initial data
 -- -----------------------------------------------------
--- `wms`.`wms_role`;
-insert into `wms`.`wms_role`(`role_name`,`role_permission`) values ('超级管理员','所有权限'),('入单员','入单'),('仓管员','仓管'),('搬运工','搬运');
--- `wms`.`wms_user`
-insert into `wms`.`wms_user`
-	(`user_name`,`user_realname`,`user_password`,`user_email`,`user_phone`,`user_last_logintime`,`user_last_loginip`,`user_status`,`user_role_id`)
-values
-	('mpthink','paul','123','test@163.com','13551178888','2016-10-30 00:00:00','10.11.22.33',1,1),
-	('mayiyang','xiamage','123','test@163.com','13551170000','2016-10-31 00:00:00','10.11.22.33',1,3),
-	('yangyeye','xiaoyang','123','test@163.com','13551179999','2016-10-30 00:00:00','10.11.22.33',1,2);
+
+
 -- `wms`.`wms_notice`
 insert into `wms`.`wms_notice`(`notice_title`,`notice_content`,`user_id`)
 values 
