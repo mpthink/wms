@@ -7,26 +7,24 @@
 	<insert id="insertUser" parameterType="User">
 		insert into wms_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userName != null">user_name,</if>
-			<if test="userRealname != null">user_realname,</if>
-			<if test="userPassword != null">user_password,</if>
-			<if test="userEmail != null">user_email,</if>
-			<if test="userPhone != null">user_phone,</if>
-			<if test="userLastLogintime != null">user_last_logintime,</if>
-			<if test="userLastLoginip != null">user_last_loginip,</if>
-			<if test="userStatus != 0">user_status,</if>
-			<if test="roleId != 0">user_role_id,</if>
+			<if test="name != null">name,</if>
+			<if test="realName != null">real_name,</if>
+			<if test="password != null">password,</if>
+			<if test="email != null">email,</if>
+			<if test="phone != null">phone,</if>
+			<if test="lastLoginTime != null">last_login_time,</if>
+			<if test="lastLoginIp != null">last_login_ip,</if>
+			<if test="status != 0">status,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userName != null">#{userName,jdbcType=VARCHAR},</if>
-			<if test="userRealname != null">#{userRealname},</if>
-			<if test="userPassword != null">#{userPassword},</if>
-			<if test="userEmail != null">#{userEmail},</if>
-			<if test="userPhone != null">#{userPhone},</if>
-			<if test="userLastLogintime != null">#{userLastLogintime},</if>
-			<if test="userLastLoginip != null">#{userLastLoginip},</if>
-			<if test="userStatus != 0">#{userStatus},</if>
-			<if test="roleId != 0">#{roleId},</if>
+			<if test="name != null">#{name,jdbcType=VARCHAR},</if>
+			<if test="realName != null">#{realName},</if>
+			<if test="password != null">#{password},</if>
+			<if test="email != null">#{email},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="lastLoginTime != null">#{lastLoginTime},</if>
+			<if test="lastLoginIp != null">#{lastLoginIp},</if>
+			<if test="status != 0">#{status},</if>
 		</trim>
 	</insert>
     
@@ -34,107 +32,58 @@
     	delete from 
     		wms_user
     	where 
-    		user_id=#{userId}
+    		id=#{id}
     </delete>
     
     <update id="updateUser" parameterType="User">
     	update 
     		wms_user
     	<trim prefix="set" suffixOverrides=",">
-    		<if test="userName != null">user_name=#{userName},</if>
-			<if test="userRealname != null">user_realname=#{userRealname},</if>
-			<if test="userPassword != null">user_password=#{userPassword},</if>
-			<if test="userEmail != null">user_email=#{userEmail},</if>
-			<if test="userPhone != null">user_phone=#{userPhone},</if>
-			<if test="userLastLogintime != null">user_last_logintime=#{userLastLogintime},</if>
-			<if test="userLastLoginip != null">user_last_loginip=#{userLastLoginip},</if>
-			<if test="userStatus != 0">user_status=#{userStatus},</if>
-			<if test="roleId != 0">user_role_id=#{roleId},</if>
+    		<if test="name != null">name=#{name},</if>
+			<if test="realName != null">real_name=#{realName},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="email != null">email=#{email},</if>
+			<if test="phone != null">phone=#{phone},</if>
+			<if test="lastLoginTime != null">last_login_time=#{lastLoginTime},</if>
+			<if test="lastLoginIp != null">last_login_ip=#{lastLoginIp},</if>
+			<if test="status != 0">status=#{status},</if>
     	</trim>
     	where
-    		user_id=#{userId}
+    		id=#{id}
     </update>
     
-    <select id="queryByUserId" resultType="User" parameterType="long">
+    <select id="queryByUserId" resultType="User" parameterType="int">
         select 
-        	user.user_id,
-        	user.user_name,
-        	user.user_realname,
-        	user.user_password,
-        	user.user_email,
-        	user.user_phone,
-        	user.user_create_time,
-        	user.user_last_logintime,
-        	user.user_last_loginip,
-        	user.user_status,
-        	role.role_id "role_id",
-        	role.role_name "role_name"
+        	*
         from 
-        	wms_user user
-        inner join wms_role role on user.user_role_id = role.role_id
+        	wms_user
         where
-        	user.user_id=#{userId}
+        	id=#{id}
     </select>
     
     <select id="queryByName" resultType="User" parameterType="String">
         select 
-        	user.user_id,
-        	user.user_name,
-        	user.user_realname,
-        	user.user_password,
-        	user.user_email,
-        	user.user_phone,
-        	user.user_create_time,
-        	user.user_last_logintime,
-        	user.user_last_loginip,
-        	user.user_status,
-        	role.role_id "role_id",
-        	role.role_name "role_name"
+        	*
         from 
         	wms_user user
-        inner join wms_role role on user.user_role_id = role.role_id
         where
-        	user.user_name=#{userName}
+        	name=#{name}
     </select>
     
     <select id="queryByNamePassword" resultType="User">
         select 
-        	user.user_id,
-        	user.user_name,
-        	user.user_realname,
-        	user.user_password,
-        	user.user_email,
-        	user.user_phone,
-        	user.user_create_time,
-        	user.user_last_logintime,
-        	user.user_last_loginip,
-        	user.user_status,
-        	role.role_id "role_id",
-        	role.role_name "role_name"
+        	*
         from 
-        	wms_user user
-        inner join wms_role role on user.user_role_id = role.role_id
+        	wms_user
         where
-        	user.user_name=#{userName} and user.user_password=#{userPassword}
+        	name=#{name} and password=#{password}
     </select>
     
 	<select id="queryAll" resultType="User">
 		select 
-        	user.user_id,
-        	user.user_name,
-        	user.user_realname,
-        	user.user_password,
-        	user.user_email,
-        	user.user_phone,
-        	user.user_create_time,
-        	user.user_last_logintime,
-        	user.user_last_loginip,
-        	user.user_status,
-        	role.role_id "role_id",
-        	role.role_name "role_name"
+        	*
         from 
-        	wms_user user
-        left join wms_role role on user.user_role_id = role.role_id
-        order by user.user_id
+        	wms_user
+        order by id
 	</select>
 </mapper>

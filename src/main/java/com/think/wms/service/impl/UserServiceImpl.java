@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void createUser(User user) {
-		if (userDao.queryByName(user.getUserName()) != null) {
+		if (userDao.queryByName(user.getName()) != null) {
 			throw new WMSException("用户名已存在!");
 		}
 		int result = userDao.insertUser(user);

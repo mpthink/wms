@@ -10,15 +10,15 @@ public interface UserDao {
 
 	int insertUser(User user);
 
-	int deleteUser(long userId);
+	int deleteUser(int id);
 
 	int updateUser(User user);
 
-	User queryByUserId(long userId);
+	User queryByUserId(int id);
 
-	User queryByName(String userName);
+	User queryByName(String name);
 
-	User queryByNamePassword(@Param("userName") String userName, @Param("userPassword") String userPassword);
+	User queryByNamePassword(@Param("name") String name, @Param("password") String password);
 
 	List<User> queryAll();
 }

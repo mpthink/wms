@@ -26,7 +26,6 @@ public class StoreDaoTest {
 		store.setStoreSubName("1号库B");
 		store.setStoreTotalSpace("100立方");
 		store.setStoreManager(storeManager);
-		storeManager.setUserId(1);
 		int result = storeDao.insertStore(store);
 		System.out.println(result);
 	}

@@ -8,13 +8,13 @@ public interface UserService {
 
 	void createUser(User user);
 
-	void deleteUser(int userId);
+	void deleteUser(int id);
 
 	void updateUser(User user);
 
-	User getUserById(int userId);
+	User getUserById(int id);
 
-	User login(String userName, String userPassword);
+	User login(String name, String password);
 
 	List<User> getUserList();
 

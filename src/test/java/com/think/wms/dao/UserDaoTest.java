@@ -29,15 +29,14 @@ public class UserDaoTest {
 		String userLastLoginip = "10.11.22.33";
 		int userStatus = 1;
 		User user = new User();
-		user.setUserName(userName);
-		user.setUserRealname(userRealname);
-		user.setUserPassword(userPassword);
-		user.setUserEmail(userEmail);
-		user.setUserPhone(userPhone);
-		user.setUserLastLogintime(userLastLogintime);
-		user.setUserLastLoginip(userLastLoginip);
-		user.setUserStatus(userStatus);
-		user.setRoleId(1);
+		user.setName(userName);
+		user.setRealName(userRealname);
+		user.setPassword(userPassword);
+		user.setEmail(userEmail);
+		user.setPhone(userPhone);
+		user.setLastLoginTime(userLastLogintime);
+		user.setLastLoginIp(userLastLoginip);
+		user.setStatus(userStatus);
 		int result = userDao.insertUser(user);
 		System.out.println(result);
 	}
@@ -50,35 +49,15 @@ public class UserDaoTest {
 
 	@Test
 	public void testUpdateUser() {
-		long userId = 1;
-		String userName = "mpthink";
-		String userRealname = "马坡";
-		String userPassword = "1234";
-		String userEmail = "mpthink2@163.com";
-		String userPhone = "13551172866";
-		Date userLastLogintime = new Date();
-		String userLastLoginip = "10.11.22.33";
-		int userStatus = 2;
 		User user = new User();
-		user.setUserId(userId);
-		user.setUserName(userName);
-		user.setUserRealname(userRealname);
-		user.setUserPassword(userPassword);
-		user.setUserEmail(userEmail);
-		user.setUserPhone(userPhone);
-		user.setUserLastLogintime(userLastLogintime);
-		user.setUserLastLoginip(userLastLoginip);
-		user.setUserStatus(userStatus);
-		user.setRoleId(2);
-		int result = userDao.updateUser(user);
-		System.out.println(result);
+		user.setId(4);
+		user.setRealName("我是天才");
+		System.out.println(userDao.updateUser(user));
 	}
 
 	@Test
 	public void testQueryByUserId() {
-		long userId = 2;
-		User user = userDao.queryByUserId(userId);
-		System.out.println(user);
+		System.out.println(userDao.queryByUserId(1));
 	}
 
 	@Test

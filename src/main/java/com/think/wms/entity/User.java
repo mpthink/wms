@@ -8,121 +8,101 @@ import java.util.Date;
  *
  */
 public class User {
-	private long userId;
-	private String userName;
-	private String userRealname;
-	private String userPassword;
-	private String userEmail;
-	private String userPhone;
-	private Date userCreateTime;
-	private Date userLastLogintime;
-	private String userLastLoginip;
-	private int userStatus;
-	private int roleId;
-	private String roleName;
+	private Integer id;
+	private String name;
+	private String realName;
+	private String password;
+	private String email;
+	private String phone;
+	private Date createTime;
+	private Date lastLoginTime;
+	private String lastLoginIp;
+	private int status;
 
-	public long getUserId() {
-		return userId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getUserRealname() {
-		return userRealname;
+	public String getRealName() {
+		return realName;
 	}
 
-	public void setUserRealname(String userRealname) {
-		this.userRealname = userRealname;
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getUserPhone() {
-		return userPhone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public Date getUserCreateTime() {
-		return userCreateTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setUserCreateTime(Date userCreateTime) {
-		this.userCreateTime = userCreateTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public Date getUserLastLogintime() {
-		return userLastLogintime;
+	public Date getLastLoginTime() {
+		return lastLoginTime;
 	}
 
-	public void setUserLastLogintime(Date userLastLogintime) {
-		this.userLastLogintime = userLastLogintime;
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
 
-	public String getUserLastLoginip() {
-		return userLastLoginip;
+	public String getLastLoginIp() {
+		return lastLoginIp;
 	}
 
-	public void setUserLastLoginip(String userLastLoginip) {
-		this.userLastLoginip = userLastLoginip;
+	public void setLastLoginIp(String lastLoginIp) {
+		this.lastLoginIp = lastLoginIp;
 	}
 
-	public int getUserStatus() {
-		return userStatus;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setUserStatus(int userStatus) {
-		this.userStatus = userStatus;
-	}
-
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userRealname=" + userRealname + ", userPassword=" + userPassword
-			+ ", userEmail=" + userEmail + ", userPhone=" + userPhone + ", userCreateTime=" + userCreateTime + ", userLastLogintime="
-			+ userLastLogintime + ", userLastLoginip=" + userLastLoginip + ", userStatus=" + userStatus + ", roleId=" + roleId + ", roleName="
-			+ roleName + "]";
+		return "User [id=" + id + ", name=" + name + ", realName=" + realName + ", password=" + password + ", email=" + email + ", phone=" + phone
+			+ ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime + ", lastLoginIp=" + lastLoginIp + ", status=" + status + "]";
 	}
 
 

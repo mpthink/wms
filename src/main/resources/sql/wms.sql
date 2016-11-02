@@ -11,22 +11,22 @@ USE `wms`;
 DROP TABLE IF EXISTS `wms`.`wms_user`;
 
 CREATE TABLE IF NOT EXISTS `wms`.`wms_user` (
-	`user_id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-	`user_name` VARCHAR(15) NOT NULL DEFAULT '' COMMENT '用户名称',
-	`user_realname` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
-	`user_password` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户密码',
-	`user_email` VARCHAR(40) NOT NULL DEFAULT '' COMMENT 'email地址',
-	`user_phone` VARCHAR(13) NOT NULL DEFAULT '' COMMENT '用户手机',
-	`user_create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '用户创建时间',
-	`user_last_logintime` TIMESTAMP NOT NULL COMMENT '最后登陆时间',
-    `user_last_loginip` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '最后登陆IP',
-	`user_status` SMALLINT(4) unsigned NOT NULL DEFAULT '0' COMMENT '用户状态'
-	PRIMARY KEY (`user_id`)
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+	`name` VARCHAR(15) NOT NULL DEFAULT '' COMMENT '用户名称',
+	`real_name` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
+	`password` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户密码',
+	`email` VARCHAR(40) NOT NULL DEFAULT '' COMMENT 'email地址',
+	`phone` VARCHAR(13) NOT NULL DEFAULT '' COMMENT '用户手机',
+	`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '用户创建时间',
+	`last_login_time` TIMESTAMP NOT NULL COMMENT '最后登陆时间',
+    `last_login_ip` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '最后登陆IP',
+	`status` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '用户状态',
+	PRIMARY KEY (`id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '用户表';
 
 -- `wms`.`wms_user`
 insert into `wms`.`wms_user`
-	(`user_name`,`user_realname`,`user_password`,`user_email`,`user_phone`,`user_last_logintime`,`user_last_loginip`,`user_status`)
+	(`name`,`real_name`,`password`,`email`,`phone`,`last_login_time`,`last_login_ip`,`status`)
 values
 	('mpthink','paul','123','test@163.com','13551178888','2016-10-30 00:00:00','10.11.22.33',1),
 	('mayiyang','xiamage','123','test@163.com','13551170000','2016-10-31 00:00:00','10.11.22.33',1),
@@ -38,37 +38,75 @@ values
 DROP TABLE IF EXISTS `wms`.`wms_role`;
 
 CREATE TABLE IF NOT EXISTS `WMS`.`wms_role`(
-	`role_id` INT unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
-	`role_name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '角色名称',
+	`id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色id',
+	`name` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '角色名称',
 	`role_code` VARCHAR(20) NOT NULL DEFAULT '' COMMENT '角色代码',
-	`role_description` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '角色说明',
-	PRIMARY KEY (`role_id`)
+	`description` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '角色说明',
+	PRIMARY KEY (`id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '角色信息表';
 
 -- `wms`.`wms_role` data;
-insert into `wms`.`wms_role`(`role_name`,`role_permission`) 
+insert into `wms`.`wms_role`(`name`,`role_code`,`description`) 
 values ('superadmin','superadmin','超级管理员'),('admin','admin','管理员'),('仓管','storekeeper','仓管员'),('搬运工','carrier','搬运工'),('录单员','inputer','录单员');
+
+-- -----------------------------------------------------
+-- Table `wms`.`wms_user_role`
+-- -----------------------------------------------------
+CREATE TABLE `wms`.`wms_user_role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ID` int(11) NOT NULL,
+  `ROLE_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_USER_ROL_REFERENCE_ROLE` (`ROLE_ID`) USING BTREE,
+  KEY `FK_USER_ROL_REFERENCE_USER` (`USER_ID`) USING BTREE,
+  CONSTRAINT `wms_user_role_ibfk_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `wms_role` (`ID`),
+  CONSTRAINT `wms_user_role_ibfk_2` FOREIGN KEY (`USER_ID`) REFERENCES `wms_user` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '用户角色表';
+
+/*Data for the table `wms`.`wms_user_role` */
+
+insert  into `wms`.`wms_user_role`(`ID`,`USER_ID`,`ROLE_ID`) values (1,1,1),(2,2,2);
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_permission`
 -- -----------------------------------------------------
 CREATE TABLE `wms`.`wms_permission` (
-  `permission_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `PID` int(11) DEFAULT NULL COMMENT '父节点名称',
-  `NAME` varchar(50) NOT NULL COMMENT '名称',
+  `NAME` varchar(50) NOT NULL COMMENT '权限名称',
   `TYPE` varchar(20) DEFAULT NULL COMMENT '类型:菜单or功能',
   `SORT` int(11) DEFAULT NULL COMMENT '排序',
-  `URL` varchar(255) DEFAULT NULL,
-  `PERM_CODE` varchar(50) DEFAULT NULL COMMENT '菜单编码',
-  `ICON` varchar(255) DEFAULT NULL,
-  `STATE` varchar(10) DEFAULT NULL,
-  `DESCRIPTION` text,
+  `URL` varchar(255) DEFAULT NULL COMMENT '访问地址',
+  `PERMISSION_CODE` varchar(50) DEFAULT NULL COMMENT '菜单权限编码',
+  `ICON` varchar(255) DEFAULT NULL COMMENT '图标',
+  `STATE` varchar(10) DEFAULT NULL COMMENT '权限状态',
+  `DESCRIPTION` text COMMENT '权限描述',
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '权限表';
 
+-- `wms`.`wms_permission` data;
+insert  into `wms`.`wms_permission`(`ID`,`PID`,`NAME`,`TYPE`,`SORT`,`URL`,`PERMISSION_CODE`,`ICON`,`STATE`,`DESCRIPTION`) 
+values (1,NULL,'系统管理','F',1,'','','&#xe62e;','',''),
+(2,1,'角色管理','F',3,'/role/list','','','closed',''),
+(3,1,'用户管理','F',2,'/system/user/list','','','closed','');
 
+-- -----------------------------------------------------
+-- Table `wms`.`wms_role_permission`
+-- -----------------------------------------------------
 
+CREATE TABLE `wms`.`wms_role_permission` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ROLE_ID` int(11) DEFAULT NULL,
+  `PERMISSION_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_ROLE_permission_REFERENCE_permission` (`PERMISSION_ID`) USING BTREE,
+  KEY `FK_ROLE_permission_REFERENCE_ROLE` (`ROLE_ID`) USING BTREE,
+  CONSTRAINT `wms_role_permission_ibfk_1` FOREIGN KEY (`PERMISSION_ID`) REFERENCES `wms_permission` (`ID`),
+  CONSTRAINT `wms_role_permission_ibfk_2` FOREIGN KEY (`ROLE_ID`) REFERENCES `wms_role` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色权限表';
 
+insert  into `wms`.`wms_role_permission`(`ROLE_ID`,`PERMISSION_ID`) 
+values (1,1),(1,2),(1,3);
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_notice`
@@ -80,9 +118,9 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_notice`(
 	`notice_title` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '通知标题',
 	`notice_content` TEXT COMMENT '通知内容',
 	`notice_create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '通知创建时间',
-	`user_id` INT NOT NULL DEFAULT '0' COMMENT '通知创建人',
+	`id` INT NOT NULL DEFAULT '0' COMMENT '通知创建人',
 	PRIMARY KEY (`notice_id`),
-	KEY `idx_user_id` (`user_id`)
+	KEY `idx_id` (`id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '信息通知表';
 
 -- -----------------------------------------------------
@@ -93,9 +131,9 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_log`(
 	`log_id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`log_action` VARCHAR(100) NOT NULL DEFAULT '' COMMENT '日志行为',
 	`log_create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '日志时间',
-	`user_id` INT NOT NULL DEFAULT '0' COMMENT '用户ID',
+	`id` INT NOT NULL DEFAULT '0' COMMENT '用户ID',
 	PRIMARY KEY (`log_id`),
-	KEY `idx_user_id` (`user_id`)
+	KEY `idx_id` (`id`)
 )ENGINE = InnoDB DEFAULT CHARSET=UTF8 COMMENT '';
 
 -- -----------------------------------------------------
@@ -299,13 +337,13 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_outstore_sub` (
 
 
 -- `wms`.`wms_notice`
-insert into `wms`.`wms_notice`(`notice_title`,`notice_content`,`user_id`)
+insert into `wms`.`wms_notice`(`notice_title`,`notice_content`,`id`)
 values 
 	('通知1','通知内容1',1),
 	('通知2','通知内容2',2),
 	('通知3','通知内容3',3);
 -- `wms`.`wms_log`
-insert into `wms`.`wms_log`(`log_action`,`user_id`)
+insert into `wms`.`wms_log`(`log_action`,`id`)
 values
 	('操作1',1),
 	('操作2',2),
