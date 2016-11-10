@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.think.wms.dao.UserDao;
-import com.think.wms.entity.User;
 import com.think.wms.exception.WMSException;
+import com.think.wms.model.User;
 import com.think.wms.service.UserService;
 
 @Service
@@ -17,34 +17,28 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public void createUser(User user) {
-		if (userDao.queryByName(user.getName()) != null) {
-			throw new WMSException("用户名已存在!");
-		}
-		int result = userDao.insertUser(user);
-		if (result != 1) {
-			throw new WMSException("添加用户失败!");
-		}
+	public int addUser(User user) {
+		return userDao.addUser(user);
 	}
 
 	@Override
-	public void deleteUser(int userId) {
-		userDao.deleteUser(userId);
+	public int deleteUserById(int userId) {
+		return userDao.deleteUserById(userId);
 	}
 
 	@Override
-	public void updateUser(User user) {
-		userDao.updateUser(user);
+	public int updateUser(User user) {
+		return userDao.updateUser(user);
 	}
 
 	@Override
-	public User getUserById(int userId) {
-		return userDao.queryByUserId(userId);
+	public User findById(int userId) {
+		return userDao.findById(userId);
 	}
 
 	@Override
 	public User login(String userName, String userPassword) {
-		User user = userDao.queryByNamePassword(userName, userPassword);
+		User user = userDao.findByUsernameAndPassword(userName, userPassword);
 		if (user == null) {
 			throw new WMSException("用户名或密码错误!");
 		}
@@ -52,8 +46,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getUserList() {
-		return userDao.queryAll();
+	public List<User> findAll() {
+		return userDao.findAll();
+	}
+
+	@Override
+	public User findByUserName(String username) {
+		return userDao.findByUsername(username);
 	}
 
 }

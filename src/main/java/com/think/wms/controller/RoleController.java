@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.think.wms.entity.Role;
+import com.think.wms.model.Role;
 import com.think.wms.service.RoleService;
 
 @Controller
@@ -24,10 +24,9 @@ public class RoleController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
-		List<Role> roles = roleService.getRoleList();
+		List<Role> roles = roleService.findAll();
 		model.addAttribute("roles", roles);
 		logger.debug(roles.toString());
 		return "role/list";
 	}
-
 }

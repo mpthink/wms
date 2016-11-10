@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.think.wms.dao.RolePermissionDao">
+	<!-- 目的:为DAO接口方法提供sql语句配置 -->
+	
+	<insert id="addRolePermission">
+		insert into
+			wms_role_permission(role_id,permission_id)
+		values(#{roleId},#{permissionId})
+	</insert>
+
+	<delete id="deleteByRoleId" parameterType="int">
+		delete
+			from wms_role_permission
+		where
+			role_id=#{roleId}
+	</delete>
+	
+	<delete id="deleteByPermissionId" parameterType="int">
+		delete
+			from wms_role_permission
+		where
+			permission_id=#{permissionId}
+	</delete>
+
+	<select id="findPermissionIdsByRoleId" resultType="list" parameterType="int">
+		select
+			permission_id
+		from
+			wms_role_permission
+		where
+			role_id=#{roleId}
+	</select>
+	
+	<select id="findRoleIdsByPermissionId" resultType="list" parameterType="int">
+		select
+			role_id
+		from
+			wms_role_permission
+		where
+			permission_id=#{permissionId}
+	</select>
+	
+</mapper>

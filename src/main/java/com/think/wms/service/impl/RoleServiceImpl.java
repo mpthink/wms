@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.think.wms.dao.RoleDao;
-import com.think.wms.entity.Role;
+import com.think.wms.dao.UserRoleDao;
 import com.think.wms.exception.WMSException;
+import com.think.wms.model.Role;
 import com.think.wms.service.RoleService;
 
 @Service
@@ -16,24 +17,29 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleDao roleDao;
 
+	@Autowired
+	private UserRoleDao userRoleDao;
+
+
 	@Override
-	public void createRole(String roleName, String rolePermission) {
-		roleDao.insertRole(roleName, rolePermission);
+	public int addRole(String name, String roleCode, String description) {
+		return roleDao.addRole(name, roleCode, description);
 	}
 
 	@Override
-	public void deleteRole(int roleId) {
-		roleDao.deleteRole(roleId);
+	public int deleteRoleById(int id) {
+		return roleDao.deleteRoleById(id);
 	}
 
 	@Override
-	public void update(int roleId, String roleName, String rolePermission) {
-		roleDao.updateRole(roleId, roleName, rolePermission);
+	public int update(int id, String name, String roleCode, String description) {
+		return roleDao.updateRole(id, name, roleCode, description);
 	}
 
+
 	@Override
-	public Role getRoleById(int roleId) {
-		Role role = roleDao.queryByRoleId(roleId);
+	public Role findById(int id) {
+		Role role = roleDao.findById(id);
 		if (role == null) {
 			throw new WMSException("the role is not exist");
 		}
@@ -41,8 +47,13 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public List<Role> getRoleList() {
-		return roleDao.queryAll();
+	public List<Role> findAll() {
+		return roleDao.findAll();
+	}
+
+	@Override
+	public List<Role> findByUserId(int userId) {
+		return userRoleDao.findRolesByUserId(userId);
 	}
 
 }

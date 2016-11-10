@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS `wms`.`wms_user`;
 
 CREATE TABLE IF NOT EXISTS `wms`.`wms_user` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-	`name` VARCHAR(15) NOT NULL DEFAULT '' COMMENT '用户名称',
-	`real_name` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
+	`username` VARCHAR(15) NOT NULL DEFAULT '' COMMENT '用户名称',
+	`nickname` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '昵称',
 	`password` VARCHAR(40) NOT NULL DEFAULT '' COMMENT '用户密码',
 	`email` VARCHAR(40) NOT NULL DEFAULT '' COMMENT 'email地址',
 	`phone` VARCHAR(13) NOT NULL DEFAULT '' COMMENT '用户手机',
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `wms`.`wms_user` (
 
 -- `wms`.`wms_user`
 insert into `wms`.`wms_user`
-	(`name`,`real_name`,`password`,`email`,`phone`,`last_login_time`,`last_login_ip`,`status`)
+	(`username`,`nickname`,`password`,`email`,`phone`,`last_login_time`,`last_login_ip`,`status`)
 values
 	('mpthink','paul','123','test@163.com','13551178888','2016-10-30 00:00:00','10.11.22.33',1),
 	('mayiyang','xiamage','123','test@163.com','13551170000','2016-10-31 00:00:00','10.11.22.33',1),
@@ -52,6 +52,7 @@ values ('superadmin','superadmin','超级管理员'),('admin','admin','管理员
 -- -----------------------------------------------------
 -- Table `wms`.`wms_user_role`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `wms`.`wms_user_role`;
 CREATE TABLE `wms`.`wms_user_role` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `USER_ID` int(11) NOT NULL,
@@ -70,34 +71,35 @@ insert  into `wms`.`wms_user_role`(`ID`,`USER_ID`,`ROLE_ID`) values (1,1,1),(2,2
 -- -----------------------------------------------------
 -- Table `wms`.`wms_permission`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `wms`.`wms_permission`;
 CREATE TABLE `wms`.`wms_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `PID` int(11) DEFAULT NULL COMMENT '父节点名称',
-  `NAME` varchar(50) NOT NULL COMMENT '权限名称',
-  `TYPE` varchar(20) DEFAULT NULL COMMENT '类型:菜单or功能',
-  `SORT` int(11) DEFAULT NULL COMMENT '排序',
-  `URL` varchar(255) DEFAULT NULL COMMENT '访问地址',
-  `PERMISSION_CODE` varchar(50) DEFAULT NULL COMMENT '菜单权限编码',
-  `ICON` varchar(255) DEFAULT NULL COMMENT '图标',
-  `STATE` varchar(10) DEFAULT NULL COMMENT '权限状态',
-  `DESCRIPTION` text COMMENT '权限描述',
+  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父节点名称',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '权限名称',
+  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '类型:菜单or功能',
+  `sort` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '排序',
+  `url` varchar(255) NOT NULL DEFAULT '' COMMENT '访问地址',
+  `permission_code` varchar(50) NOT NULL DEFAULT '' COMMENT '菜单权限编码',
+  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
+  `status` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '权限状态',
+  `description` VARCHAR(400) NOT NULL DEFAULT '' COMMENT '权限描述',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '权限表';
 
 -- `wms`.`wms_permission` data;
-insert  into `wms`.`wms_permission`(`ID`,`PID`,`NAME`,`TYPE`,`SORT`,`URL`,`PERMISSION_CODE`,`ICON`,`STATE`,`DESCRIPTION`) 
-values (1,NULL,'系统管理','F',1,'','','&#xe62e;','',''),
-(2,1,'角色管理','F',3,'/role/list','','','closed',''),
-(3,1,'用户管理','F',2,'/system/user/list','','','closed','');
+insert  into `wms`.`wms_permission`(`ID`,`PID`,`NAME`,`TYPE`,`SORT`,`URL`,`PERMISSION_CODE`,`ICON`,`status`,`DESCRIPTION`) 
+values (1,0,'系统管理','F',1,'','','&#xe62e;',1,''),
+(2,1,'角色管理','F',3,'/role/list','','',1,''),
+(3,1,'用户管理','F',2,'/user/list','','',1,'');
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_role_permission`
 -- -----------------------------------------------------
-
+DROP TABLE IF EXISTS `wms`.`wms_role_permission`;
 CREATE TABLE `wms`.`wms_role_permission` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `ROLE_ID` int(11) DEFAULT NULL,
-  `PERMISSION_ID` int(11) DEFAULT NULL,
+  `ROLE_ID` int(11) NOT NULL DEFAULT '0',
+  `PERMISSION_ID` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_ROLE_permission_REFERENCE_permission` (`PERMISSION_ID`) USING BTREE,
   KEY `FK_ROLE_permission_REFERENCE_ROLE` (`ROLE_ID`) USING BTREE,
@@ -107,6 +109,13 @@ CREATE TABLE `wms`.`wms_role_permission` (
 
 insert  into `wms`.`wms_role_permission`(`ROLE_ID`,`PERMISSION_ID`) 
 values (1,1),(1,2),(1,3);
+
+
+
+
+
+
+
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_notice`

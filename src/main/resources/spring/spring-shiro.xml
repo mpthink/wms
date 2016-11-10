@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<description>shiro安全配置</description>
+	
+	<!-- 自定义的realm通过注解方式注册，为: WMSRealm-->
+	<bean id="WMSRealm" class="com.think.wms.shiro.realm.WMSRealm"></bean>
+	
+	<!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="WMSRealm"/>
+    </bean>
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 注入安全管理器 -->
+		<property name="securityManager" ref="securityManager"></property>
+		<!-- 注入登陆页面 -->
+		<property name="loginUrl" value="/login"></property>
+		<!-- 注入成功页面 -->
+		<property name="successUrl" value="/role/list"></property>
+		<property name="filterChainDefinitions">
+			<value>
+				/static/** = anon
+				/login = anon
+				/** = authc
+			</value>
+		</property>
+	</bean>
+	
+</beans>

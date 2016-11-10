@@ -2,18 +2,20 @@ package com.think.wms.service;
 
 import java.util.List;
 
-import com.think.wms.entity.Role;
+import com.think.wms.model.Role;
 
 public interface RoleService {
 
-	void createRole(String roleName, String rolePermission);
+	int addRole(String name, String roleCode, String description);
 
-	void deleteRole(int roleId);
+	int deleteRoleById(int id);
 
-	void update(int roleId, String roleName, String rolePermission);
+	int update(int id, String name, String roleCode, String description);
 
-	Role getRoleById(int roleId);
+	Role findById(int id);
 
-	List<Role> getRoleList();
+	List<Role> findAll();
+
+	List<Role> findByUserId(int userId);
 
 }

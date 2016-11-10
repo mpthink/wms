@@ -2,20 +2,22 @@ package com.think.wms.service;
 
 import java.util.List;
 
-import com.think.wms.entity.User;
+import com.think.wms.model.User;
 
 public interface UserService {
 
-	void createUser(User user);
+	int addUser(User user);
 
-	void deleteUser(int id);
+	int deleteUserById(int id);
 
-	void updateUser(User user);
+	int updateUser(User user);
 
-	User getUserById(int id);
+	User findById(int id);
 
-	User login(String name, String password);
+	User findByUserName(String username);
 
-	List<User> getUserList();
+	User login(String username, String password);
+
+	List<User> findAll();
 
 }

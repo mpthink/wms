@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.think.wms.entity.Role;
+import com.think.wms.model.Role;
 
 public interface RoleDao {
 
-	int insertRole(@Param("roleName") String roleName, @Param("rolePermission") String rolePermission);
+	int addRole(@Param("name") String name, @Param("roleCode") String roleCode, @Param("description") String description);
 
-	int updateRole(@Param("roleId") int roleId, @Param("roleName") String roleName, @Param("rolePermission") String rolePermission);
+	int deleteRoleById(int id);
 
-	int deleteRole(int roleId);
+	int updateRole(@Param("id") int id, @Param("name") String name, @Param("roleCode") String roleCode, @Param("description") String description);
 
-	Role queryByRoleId(int roleId);
+	Role findById(int id);
 
-	List<Role> queryAll();
+	List<Role> findAll();
 
 }

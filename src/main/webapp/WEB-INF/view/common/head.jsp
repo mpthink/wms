@@ -24,6 +24,8 @@
   -->
 <link rel="stylesheet" href="${ctx}/static/lte/css/skins/skin-blue.min.css">
 
+<!-- iCheck -->
+  <link rel="stylesheet" href="${ctx}/static/plugins/iCheck/square/blue.css">
 <!-- DataTables -->
 <link rel="stylesheet" href="${ctx}/static/plugins/datatables/dataTables.bootstrap.css">
 

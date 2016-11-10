@@ -3,48 +3,50 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.think.wms.dao.RoleDao">
-    <!-- 目的:为DAO接口方法提供sql语句配置-->
-    <sql id="roleSelectFiled">
-    	role_id,role_name,role_permission
-    </sql>
-    
-    <select id="queryByRoleId" resultType="Role" parameterType="int">
-        select 
-			<include refid="roleSelectFiled"/>
-        from 
-        	wms_role role
-        where
-        	role.role_id=#{roleId}
-    </select>
+	<!-- 目的:为DAO接口方法提供sql语句配置 -->
+	<sql id="roleSelectFiled">
+		id,name,role_code,description
+	</sql>
 
-	<select id="queryAll" resultType="Role">
-        select 
-			<include refid="roleSelectFiled"/>
-        from 
-        	wms_role
-    </select>
-    
-    <insert id="insertRole">
-    	insert into
-    		wms_role(role_name,role_permission)
-    	values(#{roleName},#{rolePermission})
-    </insert>
-    
-    <update id="updateRole">
-    	update
-    		wms_role
-    	<trim prefix="set" suffixOverrides=",">
-    		<if test="roleName!=null">role_name=#{roleName},</if>
-    		<if test="rolePermission!=null">role_permission=#{rolePermission},</if>
-    	</trim>
-    	where 
-    		role_id=#{roleId}
-    </update>
-	
-	<delete id="deleteRole">
+	<insert id="addRole">
+		insert into
+		wms_role(name,role_code,description)
+		values(#{name},#{roleCode},#{description})
+	</insert>
+
+
+	<delete id="deleteRoleById">
 		delete
-			from wms_role
+		from wms_role
 		where
-			role_id=#{roleId}
+		id=#{id}
 	</delete>
+
+	<update id="updateRole">
+		update
+		wms_role
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">name=#{name},</if>
+			<if test="roleCode != null">role_code=#{"roleCode != null"},</if>
+			<if test="description != null">description=#{description},</if>
+		</trim>
+		where
+		id=#{id}
+	</update>
+	
+	<select id="findById" resultType="Role" parameterType="int">
+		select
+		<include refid="roleSelectFiled" />
+		from
+		wms_role role
+		where
+		role.id=#{id}
+	</select>
+
+	<select id="findAll" resultType="Role">
+		select
+		<include refid="roleSelectFiled" />
+		from
+		wms_role
+	</select>
 </mapper>

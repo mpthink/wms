@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.think.wms.entity.User;
+import com.think.wms.model.User;
 
 public interface UserDao {
 
-	int insertUser(User user);
+	int addUser(User user);
 
-	int deleteUser(int id);
+	int deleteUserById(int id);
 
 	int updateUser(User user);
 
-	User queryByUserId(int id);
+	User findById(int id);
 
-	User queryByName(String name);
+	User findByUsername(String username);
 
-	User queryByNamePassword(@Param("name") String name, @Param("password") String password);
+	User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
-	List<User> queryAll();
+	List<User> findAll();
 }

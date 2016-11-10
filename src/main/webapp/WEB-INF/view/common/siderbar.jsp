@@ -8,7 +8,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="${ctx}/static/lte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>管理员：</p>
@@ -33,18 +33,25 @@
       <ul class="sidebar-menu">
         <li class="header">导航菜单</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="treeview"><a href="#"><i class="fa fa-link"></i> <span>测试</span></a></li>
-        <li class="active treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>用户角色管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="${ctx}/user/list"><i class="fa fa-user"></i>用户管理</a></li>
-            <li><a href="${ctx}/role/list"><i class="fa fa-user-md"></i>角色管理</a></li>
-          </ul>
-        </li>
+        <c:forEach items="${permissions }" var="permission">
+	        <c:if test="${permission.pid==0 }">
+				<li class="active treeview">
+					<a href="#"><i class="fa fa-link"></i> 
+						<span>${permission.name}</span>
+						<span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+					</a>
+					<ul class="treeview-menu"> 
+			        	<c:forEach items="${permissions }" var="perm">
+									<c:if test="${permission.id == perm.pid }">
+											<li><a href="${ctx}${perm.url}" data-title="${perm.name }"><i class="${perm.icon }"></i>${perm.name }</a></li>
+									</c:if>
+						</c:forEach>
+					</ul>
+				</li>
+	        </c:if>
+        </c:forEach>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

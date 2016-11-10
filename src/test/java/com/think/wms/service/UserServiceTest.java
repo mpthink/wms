@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.think.wms.entity.User;
+import com.think.wms.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml", "classpath:spring/spring-service.xml"})
@@ -22,11 +22,11 @@ public class UserServiceTest {
 		String userRealname = "马坡1";
 		String userPassword = "123";
 		String userEmail = "mpthink1@163.com";
-		user.setName(userName);
-		user.setRealName(userRealname);
+		user.setUsername(userName);
+		user.setNickname(userRealname);
 		user.setPassword(userPassword);
 		user.setEmail(userEmail);
-		userService.createUser(user);
+		userService.addUser(user);
 	}
 
 

@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.think.wms.dao.UserDao">
 
-	<insert id="insertUser" parameterType="User">
+	<insert id="addUser" parameterType="User">
 		insert into wms_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="name != null">name,</if>
-			<if test="realName != null">real_name,</if>
+			<if test="username != null">username,</if>
+			<if test="nickame != null">nickame,</if>
 			<if test="password != null">password,</if>
 			<if test="email != null">email,</if>
 			<if test="phone != null">phone,</if>
@@ -28,7 +28,7 @@
 		</trim>
 	</insert>
     
-    <delete id="deleteUser">
+    <delete id="deleteUserById">
     	delete from 
     		wms_user
     	where 
@@ -39,8 +39,8 @@
     	update 
     		wms_user
     	<trim prefix="set" suffixOverrides=",">
-    		<if test="name != null">name=#{name},</if>
-			<if test="realName != null">real_name=#{realName},</if>
+    		<if test="username != null">username=#{username},</if>
+			<if test="nickame != null">nickame=#{nickame},</if>
 			<if test="password != null">password=#{password},</if>
 			<if test="email != null">email=#{email},</if>
 			<if test="phone != null">phone=#{phone},</if>
@@ -52,7 +52,7 @@
     		id=#{id}
     </update>
     
-    <select id="queryByUserId" resultType="User" parameterType="int">
+    <select id="findById" resultType="User" parameterType="int">
         select 
         	*
         from 
@@ -61,25 +61,25 @@
         	id=#{id}
     </select>
     
-    <select id="queryByName" resultType="User" parameterType="String">
+    <select id="findByUsername" resultType="User" parameterType="String">
         select 
         	*
         from 
         	wms_user user
         where
-        	name=#{name}
+        	username=#{username}
     </select>
     
-    <select id="queryByNamePassword" resultType="User">
+    <select id="findByUsernameAndPassword" resultType="User">
         select 
         	*
         from 
         	wms_user
         where
-        	name=#{name} and password=#{password}
+        	username=#{username} and password=#{password}
     </select>
     
-	<select id="queryAll" resultType="User">
+	<select id="findAll" resultType="User">
 		select 
         	*
         from 
