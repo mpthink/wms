@@ -18,7 +18,7 @@ import com.think.wms.service.PermissonService;
 @Controller
 public class HomeController {
 
-	private final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
 	PermissonService permissonService;

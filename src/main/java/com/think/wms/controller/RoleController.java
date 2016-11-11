@@ -17,7 +17,7 @@ import com.think.wms.service.RoleService;
 @RequestMapping("/role")
 public class RoleController {
 
-	private final Logger logger = LoggerFactory.getLogger(RoleController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RoleController.class);
 
 	@Autowired
 	private RoleService roleService;
@@ -26,7 +26,7 @@ public class RoleController {
 	public String list(Model model) {
 		List<Role> roles = roleService.findAll();
 		model.addAttribute("roles", roles);
-		logger.debug(roles.toString());
+		LOGGER.debug(roles.toString());
 		return "role/list";
 	}
 }

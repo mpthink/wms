@@ -14,6 +14,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.think.wms.model.Permission;
 import com.think.wms.model.Role;
@@ -22,6 +23,7 @@ import com.think.wms.service.PermissonService;
 import com.think.wms.service.RoleService;
 import com.think.wms.service.UserService;
 
+@Service
 public class WMSRealm extends AuthorizingRealm {
 
 	@Autowired

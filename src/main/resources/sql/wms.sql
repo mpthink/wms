@@ -88,9 +88,10 @@ CREATE TABLE `wms`.`wms_permission` (
 
 -- `wms`.`wms_permission` data;
 insert  into `wms`.`wms_permission`(`ID`,`PID`,`NAME`,`TYPE`,`SORT`,`URL`,`PERMISSION_CODE`,`ICON`,`status`,`DESCRIPTION`) 
-values (1,0,'系统管理','F',1,'','','&#xe62e;',1,''),
-(2,1,'角色管理','F',3,'/role/list','','',1,''),
-(3,1,'用户管理','F',2,'/user/list','','',1,'');
+values (1,0,'系统管理','F',1,'','','fa fa-desktop',1,''),
+(2,1,'角色管理','F',3,'/role/list','','fa fa-user-plus',1,''),
+(3,1,'用户管理','F',2,'/user/list','','fa fa-user',1,''),
+(4,1,'权限管理','F',4,'/permission/list','','fa fa-user-secret',1,'');
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_role_permission`
@@ -108,7 +109,7 @@ CREATE TABLE `wms`.`wms_role_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色权限表';
 
 insert  into `wms`.`wms_role_permission`(`ROLE_ID`,`PERMISSION_ID`) 
-values (1,1),(1,2),(1,3);
+values (1,1),(1,2),(1,3),(1,4);
 
 
 

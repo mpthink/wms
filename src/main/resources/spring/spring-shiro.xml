@@ -7,9 +7,8 @@
 
 	<description>shiro安全配置</description>
 	
-	<!-- 自定义的realm通过注解方式注册，为: WMSRealm-->
-	<bean id="WMSRealm" class="com.think.wms.shiro.realm.WMSRealm"></bean>
-	
+	<!-- 自定义的realm通过注解方式注册，为: WMSRealm, com.think.wms.shiro.realm.WMSRealm-->
+
 	<!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="WMSRealm"/>

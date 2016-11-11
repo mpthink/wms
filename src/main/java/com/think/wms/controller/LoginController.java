@@ -18,7 +18,7 @@ import com.think.wms.service.UserService;
 @Controller
 public class LoginController {
 
-	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private UserService userService;
@@ -40,7 +40,7 @@ public class LoginController {
 		} catch (AuthenticationException e) {
 			model.put("message", "用户名或者密码错误！");
 		} catch (Exception e) {
-			logger.debug(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return "redirect:index";
 	}
