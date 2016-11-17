@@ -9,9 +9,23 @@
 	
 	<!-- 自定义的realm通过注解方式注册，为: WMSRealm, com.think.wms.shiro.realm.WMSRealm-->
 
+	<!-- rememberMe cookie -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="testRememberMe"></constructor-arg>
+		<property name="httpOnly" value="true"></property>
+		<property name="maxAge" value="2592000"></property>		
+	</bean>
+	
+	<!-- rememberMe Manager -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"></property>
+		<property name="cookie" ref="rememberMeCookie"></property>
+	</bean>
+
 	<!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="WMSRealm"/>
+        <property name="rememberMeManager" ref="rememberMeManager"></property>
     </bean>
 	
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -25,7 +39,7 @@
 			<value>
 				/static/** = anon
 				/login = anon
-				/** = authc
+				/** = user
 			</value>
 		</property>
 	</bean>

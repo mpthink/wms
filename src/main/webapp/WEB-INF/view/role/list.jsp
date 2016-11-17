@@ -53,11 +53,16 @@
 										<td>${role.roleCode}</td>
 										<td>${role.description}</td>
 										<td>
-											<shiro:hasPermission name="sys:role:update"></shiro:hasPermission>
-											<a title="编辑角色" href="javascript:;" onclick="admin_role_edit('角色编辑','${ctx}/role/toUpdateRole/${role.id }','1')" 
-												style="text-decoration:none"><i class="fa fa-pencil"></i></a>
-											<shiro:hasPermission name="sys:role:delete"></shiro:hasPermission>
-											<a title="删除角色" href="${ctx }/role/delete/${role.id}"><i class="fa fa-remove"></i></a>
+											<div class="btn-group-xs">
+												<shiro:hasPermission name="sys:role:update">
+					                            <button type="button" class="btn btn-linkedin" onclick="admin_role_edit('角色编辑','${ctx}/role/toUpdateRole/${role.id }','1')">
+					                                <i class="fa fa-edit"></i>&nbsp;<span>编辑</span></button>
+					                            </shiro:hasPermission>
+					                            <shiro:hasPermission name="sys:role:delete">
+					                            <button type="button" class="btn btn-instagram" onclick="deleteRole(${role.id})">
+					                                <i class="fa fa-trash"></i>&nbsp;<span>删除</span></button>
+					                            </shiro:hasPermission>
+				                        	</div>
 										</td>
 									</tr>
 								</c:forEach>
@@ -86,6 +91,33 @@
   /*管理员-角色-编辑*/
   function admin_role_edit(title,url,id,w,h){
   	layer_show(title,url,w,h);
+  }
+  
+  /*管理员-角色-删除*/
+  function deleteRole(roleId){
+	  //询问框
+	  layer.confirm('确定删除角色？', {
+		  skin: 'layui-layer-molv', //样式类名
+		  btn: ['确定','取消'], //按钮
+		  title: '删除角色'
+		}, function(){
+			var index = layer.load();
+			$.ajax({
+			 type:"POST",
+			 url:"${ctx}/role/delete/"+roleId,
+			 datatype:"text",
+			 success:function(data){
+			  layer.closeAll();
+			  if(data=="true"){
+				  layer.msg('删除成功', {icon: 1});
+				  window.location.reload();
+			  }else{
+				  layer.msg('删除失败', {icon: 2});
+				  window.top.location.href="${ctx}/role/list";
+			  }
+			 }
+			});
+		});
   }
   
 </script>

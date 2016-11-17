@@ -33,25 +33,19 @@
       <ul class="sidebar-menu">
         <li class="header">导航菜单</li>
         <!-- Optionally, you can add icons to the links -->
-        <c:forEach items="${permissions }" var="permission">
-	        <c:if test="${permission.pid==0 }">
-				<li class="active treeview">
+        	<li class="active treeview">
 					<a href="#"><i class="fa fa-link"></i> 
-						<span>${permission.name}</span>
+						<span>系统管理</span>
 						<span class="pull-right-container">
 		              <i class="fa fa-angle-left pull-right"></i>
 		            </span>
 					</a>
 					<ul class="treeview-menu"> 
-			        	<c:forEach items="${permissions }" var="perm">
-									<c:if test="${permission.id == perm.pid }">
-											<li><a href="${ctx}${perm.url}" data-title="${perm.name }"><i class="${perm.icon }"></i>${perm.name }</a></li>
-									</c:if>
-						</c:forEach>
+						<li><a href="${ctx}/user/list" data-title="用户管理"><i class="fa fa-user"></i>用户管理</a></li>
+						<li><a href="${ctx}/role/list" data-title="角色管理"><i class="fa fa-user-plus"></i>角色管理</a></li>
+						<li><a href="${ctx}/permission/list" data-title="权限管理"><i class="fa fa-user-secret"></i>权限管理</a></li>
 					</ul>
-				</li>
-	        </c:if>
-        </c:forEach>
+			</li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

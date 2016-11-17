@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.think.wms.model.Role;
 import com.think.wms.service.RoleService;
@@ -28,5 +30,16 @@ public class RoleController {
 		model.addAttribute("roles", roles);
 		LOGGER.debug(roles.toString());
 		return "role/list";
+	}
+
+	@ResponseBody
+	@RequestMapping("/delete/{roleId}")
+	public String deleteRole(@PathVariable Integer roleId) {
+		int result = roleService.deleteRoleById(roleId);
+		if (result == 1) {
+			return Boolean.TRUE.toString();
+		} else {
+			return Boolean.FALSE.toString();
+		}
 	}
 }
