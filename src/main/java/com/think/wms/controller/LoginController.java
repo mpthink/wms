@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.think.wms.service.UserService;
 
@@ -30,19 +30,21 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(String username, String password,
-		@RequestParam(value = "rememberMe", required = false) Integer rememberMe, ModelMap model) {
+		@RequestParam(value = "rememberMe", required = false) Integer rememberMe, RedirectAttributes flash) {
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		if (null != rememberMe && rememberMe == 1) {
 			token.setRememberMe(true);
 		}
+
 		try {
 			SecurityUtils.getSubject().login(token);
+			return "redirect:index";
 		} catch (AuthenticationException e) {
-			model.put("message", "用户名或者密码错误！");
+			flash.addFlashAttribute("message", "用户名或者密码错误！");
 		} catch (Exception e) {
 			LOGGER.debug(e.getMessage());
 		}
-		return "redirect:index";
+		return "redirect:login";
 	}
 
 }

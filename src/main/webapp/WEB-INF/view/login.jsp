@@ -35,6 +35,12 @@
         </div>
         <!-- /.col -->
       </div>
+        <div class="row">
+	      	 	<c:if test="${message != null }">
+	      	 	<div class="text-center alert alert-danger"><span>${message}</span></div>
+	      	 </c:if>
+	    </div>
+      
     </form>
   </div>
   <!-- /.login-box-body -->

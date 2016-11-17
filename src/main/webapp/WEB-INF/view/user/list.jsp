@@ -57,7 +57,7 @@
 											<a title="编辑角色" href="javascript:;" onclick="admin_role_edit('角色编辑','${ctx}/role/toUpdateRole/${role.id }','1')" 
 												style="text-decoration:none"><i class="fa fa-pencil"></i></a>
 											<shiro:hasPermission name="sys:role:delete"></shiro:hasPermission>
-											<a title="删除角色" href="${ctx }/role/delete/${role.id}"><i class="fa fa-remove"></i></a>
+											<a title="删除角色" href="${ctx }/role/delete/${role.id}"><i class="fa fa-pencil"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
