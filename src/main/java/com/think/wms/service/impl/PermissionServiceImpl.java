@@ -1,11 +1,13 @@
 package com.think.wms.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.think.wms.dao.PermissionDao;
+import com.think.wms.dao.RolePermissionDao;
 import com.think.wms.model.Permission;
 import com.think.wms.service.PermissonService;
 
@@ -14,6 +16,9 @@ public class PermissionServiceImpl implements PermissonService {
 
 	@Autowired
 	private PermissionDao permisionDao;
+
+	@Autowired
+	private RolePermissionDao rolePermissionDao;
 
 	@Override
 	public int addPermission(Permission permission) {
@@ -48,6 +53,21 @@ public class PermissionServiceImpl implements PermissonService {
 	@Override
 	public List<Permission> findByUserId(int userId) {
 		return permisionDao.findByUserId(userId);
+	}
+
+	@Override
+	public List<Permission> findByPid(int pid) {
+		return permisionDao.findByPid(pid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findMapResultsByPid(int pid) {
+		return permisionDao.findMapResultsByPid(pid);
+	}
+
+	@Override
+	public List<Integer> findPermissionIdsByRoleId(int roleId) {
+		return rolePermissionDao.findPermissionIdsByRoleId(roleId);
 	}
 
 }

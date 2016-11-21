@@ -17,7 +17,7 @@ public class Permission {
 
 	private String icon;
 
-	private String state;
+	private String status;
 
 	private String description;
 
@@ -85,14 +85,6 @@ public class Permission {
 		this.icon = icon;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -101,11 +93,20 @@ public class Permission {
 		this.description = description;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Permission [id=" + id + ", pid=" + pid + ", name=" + name + ", type=" + type + ", sort=" + sort + ", url=" + url + ", permissionCode="
-			+ permissionCode + ", icon=" + icon + ", state=" + state + ", description=" + description + "]";
+			+ permissionCode + ", icon=" + icon + ", status=" + status + ", description=" + description + "]";
 	}
+
 
 
 }

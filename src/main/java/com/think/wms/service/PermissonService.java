@@ -1,6 +1,7 @@
 package com.think.wms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.think.wms.model.Permission;
 
@@ -17,6 +18,12 @@ public interface PermissonService {
 
 	List<Permission> findByRoleId(int roleId);
 
+	List<Integer> findPermissionIdsByRoleId(int roleId);
+
 	List<Permission> findByUserId(int userId);
+
+	List<Permission> findByPid(int pid);
+
+	List<Map<String, Object>> findMapResultsByPid(int pid);
 
 }

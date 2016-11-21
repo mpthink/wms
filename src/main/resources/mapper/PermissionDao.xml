@@ -5,7 +5,7 @@
 <mapper namespace="com.think.wms.dao.PermissionDao">
 	<!-- 目的:为DAO接口方法提供sql语句配置 -->
 	<sql id="permissionSelectFiled">
-		id,pid,name,type,sort,url,permission_code,icon,state,description
+		id,pid,name,type,sort,url,permission_code,icon,status,description
 	</sql>
 
 	<insert id="addPermission" parameterType="Permission">
@@ -19,7 +19,7 @@
 			<if test="url != null">url,</if>
 			<if test="permission_code != null">permission_code,</if>
 			<if test="icon != null">icon,</if>
-			<if test="state != null">state,</if>
+			<if test="status != null">status,</if>
 			<if test="description != null">description,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -30,7 +30,7 @@
 			<if test="url != null">#{url},</if>
 			<if test="permission_code != null">#{permission_code},</if>
 			<if test="icon != null">#{icon},</if>
-			<if test="state != null">#{state},</if>
+			<if test="status != null">#{status},</if>
 			<if test="description != null">#{description},</if>
 		</trim>
 	</insert>
@@ -54,7 +54,7 @@
 			<if test="url != null">#{url},</if>
 			<if test="permission_code != null">#{permission_code},</if>
 			<if test="icon != null">#{icon},</if>
-			<if test="state != null">#{state},</if>
+			<if test="status != null">#{status},</if>
 			<if test="description != null">#{description},</if>
 		</trim>
 		where
@@ -68,6 +68,24 @@
 		wms_permission permission
 		where
 		permission.id=#{id}
+	</select>
+	
+	<select id="findByPid" resultType="Permission" parameterType="int">
+		select
+		<include refid="permissionSelectFiled" />
+		from
+		wms_permission permission
+		where
+		permission.pid=#{pid}
+	</select>
+	
+	<select id="findMapResultsByPid" resultType="hashmap" parameterType="int">
+		select
+		<include refid="permissionSelectFiled" />
+		from
+		wms_permission permission
+		where
+		permission.pid=#{pid}
 	</select>
 
 	<select id="findAll" resultType="Permission">

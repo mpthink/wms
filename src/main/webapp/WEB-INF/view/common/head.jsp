@@ -30,6 +30,8 @@
 <!-- DataTables -->
 <link rel="stylesheet" href="${ctx}/static/plugins/datatables/dataTables.bootstrap.css">
 
+<!-- my css -->
+<link rel="stylesheet" href="${ctx}/static/wmsCSS/wms.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>

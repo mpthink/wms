@@ -25,7 +25,7 @@
 			permission_id=#{permissionId}
 	</delete>
 
-	<select id="findPermissionIdsByRoleId" resultType="list" parameterType="int">
+	<select id="findPermissionIdsByRoleId" resultType="int" parameterType="int">
 		select
 			permission_id
 		from
@@ -34,7 +34,7 @@
 			role_id=#{roleId}
 	</select>
 	
-	<select id="findRoleIdsByPermissionId" resultType="list" parameterType="int">
+	<select id="findRoleIdsByPermissionId" resultType="int" parameterType="int">
 		select
 			role_id
 		from

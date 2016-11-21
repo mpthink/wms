@@ -55,7 +55,7 @@
 										<td>
 											<div class="btn-group-xs">
 												<shiro:hasPermission name="sys:role:update">
-					                            <button type="button" class="btn btn-linkedin" onclick="admin_role_edit('角色编辑','${ctx}/role/toUpdateRole/${role.id }','1')">
+					                            <button type="button" class="btn btn-linkedin" onclick="updateRole('角色编辑','${ctx}/role/toUpdateRole/${role.id }')">
 					                                <i class="fa fa-edit"></i>&nbsp;<span>编辑</span></button>
 					                            </shiro:hasPermission>
 					                            <shiro:hasPermission name="sys:role:delete">
@@ -89,8 +89,28 @@
   });
   
   /*管理员-角色-编辑*/
-  function admin_role_edit(title,url,id,w,h){
-  	layer_show(title,url,w,h);
+  function updateRole(title,url,w,h){
+	if (title == null || title == '') {
+		title=false;
+	};
+	if (url == null || url == '') {
+		url="404.html";
+	};
+	if (w == null || w == '') {
+		w=800;
+	};
+	if (h == null || h == '') {
+		h=($(window).height() - 200);
+	};
+	layer.open({
+		type:2,
+		area:[w+'px', h+'px'],
+		fix:false,
+		maxmin:true,
+		shade:0.4,
+		title:title,
+		content:url
+	});
   }
   
   /*管理员-角色-删除*/
@@ -118,7 +138,12 @@
 			 }
 			});
 		});
-  }
+  	}
+  
+  
+  
+  
+  
   
 </script>
 
