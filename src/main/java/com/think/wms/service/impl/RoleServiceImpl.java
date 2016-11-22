@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.think.wms.dao.RoleDao;
+import com.think.wms.dao.RolePermissionDao;
 import com.think.wms.dao.UserRoleDao;
 import com.think.wms.exception.WMSException;
 import com.think.wms.model.Role;
@@ -19,6 +20,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	private UserRoleDao userRoleDao;
+
+	@Autowired
+	private RolePermissionDao rolePermissionDao;
 
 
 	@Override
@@ -54,6 +58,16 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> findByUserId(int userId) {
 		return userRoleDao.findRolesByUserId(userId);
+	}
+
+	@Override
+	public int deletePermissionsByRoleId(int roleId) {
+		return rolePermissionDao.deleteByRoleId(roleId);
+	}
+
+	@Override
+	public int addRolePermission(int roleId, int permissionId) {
+		return rolePermissionDao.addRolePermission(roleId, permissionId);
 	}
 
 }

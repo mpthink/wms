@@ -8,24 +8,25 @@
 <div class="col-md-12">
 
 	 <!-- form start -->
-	<form class="form-horizontal" role="form" id="role_update">
+	<form class="form-horizontal" role="form" id="form_role_update">
 		<div class="box-body">
 			<div class="form-group">
 	            <label for="roleName" class="col-sm-2 control-label">角色名称</label>
+	            <input type="hidden" id="id" name="id" value="${role.id}">
 	            <div class="col-sm-10">
-	              <input type="text" class="form-control" id="roleName" value="${role.name}">
+	              <input type="text" class="form-control" name="name" value="${role.name}">
 	            </div>
            	</div>
            	<div class="form-group">
 	            <label for="roleName" class="col-sm-2 control-label">角色代码</label>
 	            <div class="col-sm-10">
-	              <input type="text" class="form-control" id="roleName" value="${role.roleCode}">
+	              <input type="text" class="form-control" name="roleCode" value="${role.roleCode}">
 	            </div>
            	</div>
            	<div class="form-group">
 	            <label for="roleName" class="col-sm-2 control-label">角色描述</label>
 	            <div class="col-sm-10">
-	              <input type="text" class="form-control" id="roleName" value="${role.description}">
+	              <input type="text" class="form-control" name="description" value="${role.description}">
 	            </div>
            	</div>
           
@@ -52,7 +53,7 @@
 								<dl class="cl">
 									<dt>
 										<label>
-											<% if(subMenu.get("submenu") != null && subMenu.get("submenu").equals(true)) { %>
+											<% if(subMenu.get("subMenu") != null && subMenu.get("subMenu").equals(true)) { %>
 								       			<input type="checkbox" value="<%=subMenu.get("id") %>" checked="checked" name="check" id="user-Character-0">  
 								       			<%=subMenu.get("name") %>
 								       		<% } else { %>
@@ -80,7 +81,7 @@
            		</div>
            	</div>
            <div class="box-footer">
-                <button type="submit" class="btn btn-primary center-block" id="roleSave">提交</button>
+                <button type="button" class="btn btn-primary center-block" id="roleSave">提交</button>
   		   </div>
          <!-- /.box-footer -->
 		</div>
@@ -88,9 +89,27 @@
 	<!-- form end -->	
 </div>
 
+<%--foot--%>
+<%@ include file="../common/foot.jsp" %>
+
 <!-- page script -->
 <script>
-  
+
+function layer_close(){
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.close(index);
+};
+
+$(function(){
+	$("#roleSave").click(function(){
+		var data= $("#form_role_update").serialize();
+		$.post("${ctx}/role/updateRole",data,function(result){
+			layer_close();
+			parent.location.reload();
+		},"text");
+	});
+});
+
 </script>
 
 </body>

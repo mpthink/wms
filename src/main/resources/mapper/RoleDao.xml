@@ -27,7 +27,7 @@
 		wms_role
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null">name=#{name},</if>
-			<if test="roleCode != null">role_code=#{"roleCode != null"},</if>
+			<if test="roleCode != null">role_code=#{roleCode},</if>
 			<if test="description != null">description=#{description},</if>
 		</trim>
 		where

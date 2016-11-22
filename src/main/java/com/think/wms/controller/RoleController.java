@@ -3,6 +3,8 @@ package com.think.wms.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,14 @@ public class RoleController {
 	@Autowired
 	private PermissonService permissonService;
 
+
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		List<Role> roles = roleService.findAll();
 		model.addAttribute("roles", roles);
 		LOGGER.debug(roles.toString());
-		return "role/list";
+		return "role/role_list";
 	}
 
 	@RequestMapping(value = "/toUpdateRole/{roleId}", method = RequestMethod.GET)
@@ -67,7 +71,7 @@ public class RoleController {
 		}
 		model.addAttribute("rootMenus", rootMenus);
 		model.addAttribute("role", role);
-		return "role/update_role";
+		return "role/role_update";
 	}
 
 	private boolean isPermitted(Map<String, Object> map, List<Integer> rolePermissionIds) {
@@ -79,6 +83,18 @@ public class RoleController {
 		return false;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/updateRole", method = RequestMethod.POST)
+	public void updateRole(Role role, HttpServletRequest request) {
+		roleService.update(role.getId(), role.getName(), role.getRoleCode(), role.getDescription());
+		roleService.deletePermissionsByRoleId(role.getId());
+		String[] check = request.getParameterValues("check");
+		if (check != null && check.length > 0) {
+			for (int i = 0; i < check.length; i++) {
+				roleService.addRolePermission(role.getId(), Integer.valueOf(check[i]));
+			}
+		}
+	}
 
 	@ResponseBody
 	@RequestMapping("/delete/{roleId}")
