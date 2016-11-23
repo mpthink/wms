@@ -31,7 +31,25 @@ public class RoleController {
 	@Autowired
 	private PermissonService permissonService;
 
+	@RequestMapping(value = "/toAddRole", method = RequestMethod.GET)
+	public String toAddRole(Model model) {
+		List<Map<String, Object>> menus = permissonService.findMapResultsAll();
+		model.addAttribute("menus", menus);
+		return "role/role_add";
+	}
 
+	@ResponseBody
+	@RequestMapping(value = "/addRole", method = RequestMethod.POST)
+	public void addRole(Role role, HttpServletRequest request) {
+		roleService.addRole(role.getName(), role.getRoleCode(), role.getDescription());
+		Role roleAdd = roleService.findByName(role.getName());
+		String[] check = request.getParameterValues("check");
+		if (check != null && check.length > 0) {
+			for (int i = 0; i < check.length; i++) {
+				roleService.addRolePermission(roleAdd.getId(), Integer.valueOf(check[i]));
+			}
+		}
+	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model) {

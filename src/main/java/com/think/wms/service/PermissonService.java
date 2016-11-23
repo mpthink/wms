@@ -26,4 +26,6 @@ public interface PermissonService {
 
 	List<Map<String, Object>> findMapResultsByPid(int pid);
 
+	List<Map<String, Object>> findMapResultsAll();
+
 }

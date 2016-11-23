@@ -27,7 +27,13 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public int addRole(String name, String roleCode, String description) {
-		return roleDao.addRole(name, roleCode, description);
+		Role role = roleDao.findByName(name);
+		if (role != null) {
+			return -1;
+		} else {
+			return roleDao.addRole(name, roleCode, description);
+		}
+
 	}
 
 	@Override
@@ -68,6 +74,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int addRolePermission(int roleId, int permissionId) {
 		return rolePermissionDao.addRolePermission(roleId, permissionId);
+	}
+
+	@Override
+	public Role findByName(String name) {
+		return roleDao.findByName(name);
 	}
 
 }

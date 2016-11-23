@@ -37,6 +37,10 @@
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
+						<div style="width:90px;">
+							<span><button type="button" class="btn btn-block btn-primary" id="toAddRole">添加角色</button></span>
+						</div>
+						<br>
 						<table id="roleList" class="table table-bordered table-striped">
 							<thead>
 							<tr>
@@ -100,7 +104,7 @@
 		w=800;
 	};
 	if (h == null || h == '') {
-		h=($(window).height() - 200);
+		h=($(window).height() - 400);
 	};
 	layer.open({
 		type:2,
@@ -140,7 +144,19 @@
 		});
   	}
   
-  
+$(function(){
+	$("#toAddRole").click(function(){
+		layer.open({
+			type:2,
+			area:['50%','60%'],
+			title:'添加角色',
+			shadeClose:true,
+			maxmin:true,
+			shade:0.8,
+			content:'${ctx}/role/toAddRole'
+		});
+	});
+});
   
   
   

@@ -87,6 +87,14 @@
 		where
 		permission.pid=#{pid}
 	</select>
+	
+	<select id="findMapResultsAll" resultType="hashmap">
+		select
+		<include refid="permissionSelectFiled" />
+		from
+		wms_permission permission
+		order by sort
+	</select>
 
 	<select id="findAll" resultType="Permission">
 		select

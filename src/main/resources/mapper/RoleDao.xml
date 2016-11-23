@@ -42,6 +42,15 @@
 		where
 		role.id=#{id}
 	</select>
+	
+	<select id="findByName" resultType="Role" parameterType="string">
+		select
+		<include refid="roleSelectFiled" />
+		from
+		wms_role role
+		where
+		role.name=#{name}
+	</select>
 
 	<select id="findAll" resultType="Role">
 		select

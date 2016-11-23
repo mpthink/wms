@@ -70,4 +70,9 @@ public class PermissionServiceImpl implements PermissonService {
 		return rolePermissionDao.findPermissionIdsByRoleId(roleId);
 	}
 
+	@Override
+	public List<Map<String, Object>> findMapResultsAll() {
+		return permisionDao.findMapResultsAll();
+	}
+
 }
