@@ -7,24 +7,25 @@
 	<insert id="addUser" parameterType="User">
 		insert into wms_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			status,
 			<if test="username != null">username,</if>
-			<if test="nickame != null">nickame,</if>
+			<if test="nickname != null">nickname,</if>
 			<if test="password != null">password,</if>
 			<if test="email != null">email,</if>
 			<if test="phone != null">phone,</if>
 			<if test="lastLoginTime != null">last_login_time,</if>
 			<if test="lastLoginIp != null">last_login_ip,</if>
-			<if test="status != 0">status,</if>
+			
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="name != null">#{name,jdbcType=VARCHAR},</if>
-			<if test="realName != null">#{realName},</if>
+			#{status},
+			<if test="username != null">#{username,jdbcType=VARCHAR},</if>
+			<if test="nickname != null">#{nickname},</if>
 			<if test="password != null">#{password},</if>
 			<if test="email != null">#{email},</if>
 			<if test="phone != null">#{phone},</if>
 			<if test="lastLoginTime != null">#{lastLoginTime},</if>
 			<if test="lastLoginIp != null">#{lastLoginIp},</if>
-			<if test="status != 0">#{status},</if>
 		</trim>
 	</insert>
     
@@ -39,17 +40,20 @@
     	update 
     		wms_user
     	<trim prefix="set" suffixOverrides=",">
+    		status=#{status},
     		<if test="username != null">username=#{username},</if>
-			<if test="nickame != null">nickame=#{nickame},</if>
+			<if test="nickname != null">nickname=#{nickname},</if>
 			<if test="password != null">password=#{password},</if>
 			<if test="email != null">email=#{email},</if>
 			<if test="phone != null">phone=#{phone},</if>
 			<if test="lastLoginTime != null">last_login_time=#{lastLoginTime},</if>
 			<if test="lastLoginIp != null">last_login_ip=#{lastLoginIp},</if>
-			<if test="status != 0">status=#{status},</if>
+			
     	</trim>
-    	where
-    		id=#{id}
+    	<trim prefix="where" suffixOverrides="AND |OR">
+    		<if test="id != 0">id=#{id} OR</if>
+    		<if test="username != null">username=#{username}</if>
+    	</trim>
     </update>
     
     <select id="findById" resultType="User" parameterType="int">

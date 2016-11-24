@@ -38,6 +38,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public int deleteRoleById(int id) {
+		rolePermissionDao.deleteByRoleId(id);
 		return roleDao.deleteRoleById(id);
 	}
 

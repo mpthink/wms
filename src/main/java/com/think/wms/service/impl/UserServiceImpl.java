@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.think.wms.dao.UserDao;
+import com.think.wms.dao.UserRoleDao;
 import com.think.wms.exception.WMSException;
 import com.think.wms.model.User;
 import com.think.wms.service.UserService;
@@ -16,8 +17,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private UserRoleDao userRoleDao;
+
 	@Override
 	public int addUser(User user) {
+		String username = user.getUsername();
+		User check = userDao.findByUsername(username);
+		if (check != null) {
+			return 0;
+		}
 		return userDao.addUser(user);
 	}
 

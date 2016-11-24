@@ -1,5 +1,7 @@
 package com.think.wms.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -30,7 +32,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(String username, String password,
-		@RequestParam(value = "rememberMe", required = false) Integer rememberMe, RedirectAttributes flash) {
+		@RequestParam(value = "rememberMe", required = false) Integer rememberMe, RedirectAttributes flash, HttpServletRequest request) {
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		if (null != rememberMe && rememberMe == 1) {
 			token.setRememberMe(true);
@@ -38,6 +40,12 @@ public class LoginController {
 
 		try {
 			SecurityUtils.getSubject().login(token);
+			//			User user = new User();
+			//			user.setUsername(username);
+			//			user.setLastLoginTime(new Date());
+			//			user.setLastLoginIp(request.getRemoteAddr());
+			//			userService.updateUser(user);
+
 			return "redirect:index";
 		} catch (AuthenticationException e) {
 			flash.addFlashAttribute("message", "用户名或者密码错误！");
