@@ -76,7 +76,7 @@ CREATE TABLE `wms`.`wms_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父节点名称',
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '权限名称',
-  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '类型:菜单or功能',
+  `type` varchar(20) NOT NULL DEFAULT '' COMMENT '类型:菜单 M or 功能 F',
   `sort` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '排序',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '访问地址',
   `permission_code` varchar(50) NOT NULL DEFAULT '' COMMENT '菜单权限编码',
@@ -88,10 +88,13 @@ CREATE TABLE `wms`.`wms_permission` (
 
 -- `wms`.`wms_permission` data;
 insert  into `wms`.`wms_permission`(`ID`,`PID`,`NAME`,`TYPE`,`SORT`,`URL`,`PERMISSION_CODE`,`ICON`,`status`,`DESCRIPTION`) 
-values (1,0,'系统管理','F',1,'','','fa fa-desktop',1,''),
-(2,1,'角色管理','F',3,'/role/list','','fa fa-user-plus',1,''),
-(3,1,'用户管理','F',2,'/user/list','','fa fa-user',1,''),
-(4,1,'权限管理','F',4,'/permission/list','','fa fa-user-secret',1,'');
+values (1,0,'系统管理','M',1,'','','fa fa-desktop',1,''),
+(2,1,'角色管理','M',3,'/role/list','','fa fa-user-plus',1,''),
+(3,1,'用户管理','M',2,'/user/list','','fa fa-user',1,''),
+(4,1,'权限管理','M',4,'/permission/list','','fa fa-user-secret',1,''),
+(5,2,'添加','F',0,'','sys:role:add','',1,''),
+(6,2,'删除','F',0,'','sys:role:delete','',1,''),
+(7,2,'修改','F',0,'','sys:role:update','',1,'');
 
 -- -----------------------------------------------------
 -- Table `wms`.`wms_role_permission`
@@ -109,7 +112,7 @@ CREATE TABLE `wms`.`wms_role_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色权限表';
 
 insert  into `wms`.`wms_role_permission`(`ROLE_ID`,`PERMISSION_ID`) 
-values (1,1),(1,2),(1,3),(1,4);
+values (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7);
 
 
 
